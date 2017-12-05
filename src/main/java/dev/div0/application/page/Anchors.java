@@ -12,7 +12,6 @@ import dev.div0.logging.BaseLogger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-
 public class Anchors extends BaseLogger{
 	
 	private File file;

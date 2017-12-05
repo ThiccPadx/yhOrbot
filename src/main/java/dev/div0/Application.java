@@ -273,7 +273,7 @@ public class Application implements IEventListener{
 			destroyTask();
 		}
 		else{
-			log("Manual task finishing requre !!!");
+			log("Manual task finishing required !!!");
 		}
 	}
 
@@ -339,7 +339,7 @@ public class Application implements IEventListener{
     	}
     	else
     	{
-    		System.err.println("CHANNEL " + "/message" + "  IS NULL");
+    		//System.err.println("CHANNEL " + "/message" + "  IS NULL");
     	}
 	}
 	private void sendTaskResult(JSONObject clientMessageData) {
@@ -350,7 +350,7 @@ public class Application implements IEventListener{
 		}
 		else
 		{
-			System.err.println("CHANNEL " + "/taskResult" + "  IS NULL");
+			//System.err.println("CHANNEL " + "/taskResult" + "  IS NULL");
 		}
 	}
 }

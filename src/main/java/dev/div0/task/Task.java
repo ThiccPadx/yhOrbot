@@ -42,12 +42,13 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 	private boolean isManualTaskFinish = false;
 	
 	public Task(String taskData){
-		log("new task");
+		log("new task "+taskData);
 		intDefaultTaskResult();
 		EventDispatcher.getInstance().addEventListener(this);
-
+		log("start parsing task data...");
 		JSONObject parsedData = parser.parse(taskData);
 
+		log("parsedData="+parsedData);
 		steps = (ArrayList<Step>)parsedData.get("steps");
 		log("steps parsed. total: "+steps.size());
 		
