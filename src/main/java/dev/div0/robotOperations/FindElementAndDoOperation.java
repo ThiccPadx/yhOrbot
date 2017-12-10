@@ -25,8 +25,6 @@ public class FindElementAndDoOperation extends BaseOperation {
 	
 	@Override
 	public boolean execute() throws OperationException{
-		log("FindElementAndDoOperation execute. elementSearchType="+operationData.getElementSearchType()+"  elementSearchData="+operationData.getElementSearchData());
-		
 		if(operationData.getElementSearchType() == null){
 			throw new OperationException("FindElementAndDoOperation element search type not set");
 		}
@@ -57,7 +55,6 @@ public class FindElementAndDoOperation extends BaseOperation {
 
 	protected boolean findElement() throws OperationException{
 		elementSearchType = operationData.getElementSearchType();
-		log("elementSearchType="+elementSearchType);
 		
 		isFindElementByHref = elementSearchType.equals(ElementSearchType.BY_HREF);
 		isFindElementById = elementSearchType.equals(ElementSearchType.BY_ID);
@@ -141,8 +138,7 @@ public class FindElementAndDoOperation extends BaseOperation {
 	
 	private void findElementById() throws OperationException{
 		String id = operationData.getElementSearchData();
-		log("FindElementAndDoOperation findElementById() id="+id);
-		/*
+
 		WebDriverWait wait = new WebDriverWait(webDriver, elementSearchInterval);
 		try{
 			webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
@@ -150,8 +146,8 @@ public class FindElementAndDoOperation extends BaseOperation {
 		catch(Exception exception){
 			throw new OperationException(exception.getMessage());
 		}
-		*/
-		webElement = webDriver.findElement(By.id(id));
+
+		//webElement = webDriver.findElement(By.id(id));
 	}
 	private void findElementByCssClass() throws OperationException{
 		String className = operationData.getElementSearchData();
@@ -166,11 +162,7 @@ public class FindElementAndDoOperation extends BaseOperation {
 	protected void findElementByXPath() throws OperationException{
 		String xPath = operationData.getElementSearchData();
 
-
 		WebDriverWait wait = new WebDriverWait(webDriver, elementSearchInterval);
-		
-		//log("WAITING 5 seconds");
-		//timeout(1);
 		
 		try{
 			webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xPath)));

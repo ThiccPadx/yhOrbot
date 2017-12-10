@@ -32,9 +32,11 @@ public class PhantomJsWebDriver implements IWebDriverProvider {
         */
 		
 		String[] cli_args = new String[]{ "--ignore-ssl-errors=true" };
+
 		DesiredCapabilities caps = DesiredCapabilities.phantomjs();
 		caps.setCapability( PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cli_args );
-		caps.setCapability( PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "C:/consultant/browserDrivers/phantomJS/phantomjs-2.1.1-windows/bin/phantomjs.exe");
+
+		caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "C:/consultant/browserDrivers/phantomJS/phantomjs-2.1.1-windows/bin/phantomjs.exe");
 		webDriver =  new PhantomJSDriver( caps );
 	}
 	

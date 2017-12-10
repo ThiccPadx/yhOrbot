@@ -1,6 +1,7 @@
 package dev.div0.robotOperations.factory;
 
 import dev.div0.robotOperations.*;
+import dev.div0.robotOperations.bidding.Bidding;
 import dev.div0.robotOperations.google.GetGoogleSearchResultsTotalOperation;
 import dev.div0.robotOperations.ptn.DetectPtnIsCorrect;
 import dev.div0.robotOperations.recaptcha.GetRecaptchaInstructionsOperation;
@@ -14,6 +15,12 @@ public class OperationFactory {
 	public BaseOperation getOperation(StepAction type){
 		if(type.equals(StepAction.OPEN_URL)){
 			return new OpenUrlOperation();
+		}
+		if(type.equals(StepAction.CREATE_AUTH)){
+			return new AuthOperation();
+		}
+		if(type.equals(StepAction.CREATE_BEDDING)){
+			return new Bidding();
 		}
 		else if(type.equals(StepAction.CLICK_LINK)){
 			return new ClickLinkOperation();
@@ -67,7 +74,7 @@ public class OperationFactory {
 			return new DetectPtnIsCorrect();
 		}
 		else if(type.equals(StepAction.DETECT_PAGE_HAS_TEXT)){
-			return new DetectPageHasText();
+			return new DetectPageHasTextOperation();
 		}
 		else if(type.equals(StepAction.SET_TEXT)){
 			return new SetTextOperation();
@@ -75,6 +82,9 @@ public class OperationFactory {
 		else if(type.equals(StepAction.GET_TEXT)){
 			return new GetTextOperation();
 		}
+        else if(type.equals(StepAction.GET_HTML)){
+            return new GetHtmlOperation();
+        }
 		else if(type.equals(StepAction.SELECT_CALENDAR_AVAILABLE_DATE)){
 			return new SelectCalendarAvailableDateOperation();
 		}
@@ -86,6 +96,9 @@ public class OperationFactory {
 		}
 		else if(type.equals(StepAction.PRESS_ENTER_KEY)){
 			return new PressEnterKeyOperation();
+		}
+		else if(type.equals(StepAction.HAS_ELEMENT)){
+			return new DetectPageHasElementOperation();
 		}
 		return null;
 	}

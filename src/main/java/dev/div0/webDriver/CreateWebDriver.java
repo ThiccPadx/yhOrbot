@@ -1,9 +1,6 @@
 package dev.div0.webDriver;
 
-import java.util.concurrent.TimeUnit;
-
 import dev.div0.logging.BaseLogger;
-
 import org.openqa.selenium.WebDriver;
 
 public class CreateWebDriver extends BaseLogger{

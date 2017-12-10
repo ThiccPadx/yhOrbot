@@ -68,11 +68,11 @@
 	  </dependency>
 		
 		<!-- phantomJS web driver -->
-		<dependency>
-	        <groupId>com.github.detro.ghostdriver</groupId>
-	        <artifactId>phantomjsdriver</artifactId>
-	        <version>1.0.3</version>
-		</dependency>
+      <dependency>
+          <groupId>com.codeborne</groupId>
+          <artifactId>phantomjsdriver</artifactId>
+          <version>1.3.0</version>
+      </dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-htmlunit-driver -->
 			<dependency>

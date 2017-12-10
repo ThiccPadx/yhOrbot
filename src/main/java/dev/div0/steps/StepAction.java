@@ -2,6 +2,8 @@ package dev.div0.steps;
 
 public enum StepAction {
 	TASK_SETTING("taskSettings"),
+	CREATE_AUTH("createAuth"),
+	CREATE_BEDDING("createBedding"),
 	OPEN_URL("openUrl"),
 	CLICK_LINK("clickLink"),
 	SWITCH_TO_IFRAME("switchToIframe"),
@@ -21,6 +23,7 @@ public enum StepAction {
 	REFRESH_PAGE("refreshPage"),
 	SET_TEXT("setText"),
 	GET_TEXT("getText"),
+	GET_HTML("getHtml"),
 	SELECT_CALENDAR_AVAILABLE_DATE("selectCalendarAvailableDate"),
 	DESTROY("destroy"),
 	SELECT_AVAILABLE_TIME("selectAvailableTime"),
@@ -28,8 +31,9 @@ public enum StepAction {
 	PRESS_ENTER_KEY("pressEnterKey"),
 	CLICK_ELEMENT("clickElement"),
 	UNDEFINED_STEP_ACTION("undefinedStepAction"),
-	DETECT_PAGE_HAS_TEXT("detectPageHasText");
-	
+	DETECT_PAGE_HAS_TEXT("detectPageHasText"),
+	HAS_ELEMENT("hasElement");
+
 	private final String type;
 	
 	private StepAction(String type){

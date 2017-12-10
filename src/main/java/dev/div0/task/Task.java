@@ -30,35 +30,31 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 	protected ArrayList<Step> steps = new ArrayList<>();
 	
 	private CreateWebDriver webDriverCreator;
-	private WebDriver webDriver;
+	protected WebDriver webDriver;
 	
 	protected int currentStepIndex = 0;
 	protected Step currentStep;
-	private int currentTryout = 1;
+	protected int currentTryout = 1;
 	
-	private TaskResult taskResult;
+	protected TaskResult taskResult;
 	
 	private String id;
 	private boolean isManualTaskFinish = false;
 	
 	public Task(String taskData){
 		log("new task "+taskData);
-		intDefaultTaskResult();
+		initDefaultTaskResult();
 		EventDispatcher.getInstance().addEventListener(this);
-		log("start parsing task data...");
 		JSONObject parsedData = parser.parse(taskData);
 
-		log("parsedData="+parsedData);
 		steps = (ArrayList<Step>)parsedData.get("steps");
-		log("steps parsed. total: "+steps.size());
 		
 		id = (String)parsedData.get("id");
 		isManualTaskFinish = (Boolean)parsedData.get("isManualTaskFinish");
 		taskResult.setId(id);
-		log("Task id = "+id+"  isManualTaskFinish="+isManualTaskFinish);
 	}
 	
-	private void intDefaultTaskResult() {
+	protected void initDefaultTaskResult() {
 		taskResult = new TaskResult();
 		taskResult.setPayload("no payload");
 		taskResult.setErrorText("no error");
@@ -105,7 +101,6 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 			}
 			else{
 				onStepError();
-				
 			}
 		}
 		else{
@@ -113,7 +108,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 		}
 	}
 
-	private void onStepError() {
+	protected void onStepError() {
 		if(stopped!=true){
 			
 			boolean isError = taskResult.getResult().equals(TaskResult.ERROR);
@@ -138,7 +133,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 		}
 	}
 
-	private void taskComplete() {
+	protected void taskComplete() {
 		log("Task complete !!!");
 		taskResult.setId(id);
 		log("task result "+taskResult.getResult());
@@ -152,7 +147,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 
 	public void restart() {
 		log("restart task ");
-		intDefaultTaskResult();
+		initDefaultTaskResult();
 		
 		try{
 			setTimeout(4);
@@ -169,10 +164,10 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 		webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
 	}
 
-	private void createWebDriver() {
+	protected void createWebDriver() {
 		log("Task creating chrome webDriver");
 		webDriverCreator = new CreateWebDriver();
-		//webDriver = webDriverCreator.execute(BrowserType.CHROME);
+		webDriver = webDriverCreator.execute(BrowserType.CHROME);
 		//webDriver = webDriverFactory.getDriver("firefox").getDriver();
 		//webDriver = webDriverFactory.getDriver("chrome").getDriver();
 		//webDriver = webDriverCreator.execute(BrowserType.IE);
@@ -180,7 +175,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 
 		//webDriver = webDriverCreator.execute(BrowserType.FIREFOX);
 		//webDriver = webDriverCreator.execute(BrowserType.PHANTOM_JS);
-		webDriver = webDriverCreator.execute(BrowserType.CHROME);
+		//webDriver = webDriverCreator.execute(BrowserType.HTML_UNIT);
 		//webDriver = webDriverCreator.execute(BrowserType.OPERA);
 		//webDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 		log("webDriver = "+webDriver);
@@ -216,7 +211,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 
 	@Override
 	public void eventHandler(BaseEvent event) {
-		if(event.getType().equals(OperationEvent.ELEMENT_TEXT)){
+		if(event.getType().equals(OperationEvent.ELEMENT_TEXT_RESULT)){
 			taskResult.setPayload((String)event.getData());
 		}
 		if(event.getType().equals(OperationEvent.MONTH_SELECTED)){

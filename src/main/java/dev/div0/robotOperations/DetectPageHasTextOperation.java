@@ -5,22 +5,19 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class DetectPageHasText extends FindElementAndDoOperation{
+public class DetectPageHasTextOperation extends FindElementAndDoOperation{
 
-    private WebDriverWait wait;
+    protected WebDriverWait wait;
 
     @Override
     public boolean execute() throws OperationException{
-        log("DetectPageHasText ");
-        log("xpath="+operationData.getElementSearchData());
-
         try{
             findElement();
         }
         catch(OperationException exception){
             log("NO SUCH ELEMENT by xpath "+operationData.getElementSearchData());
         }
-
+        /*
         if(webElement==null){
             log("element NOT found");
             return false;
@@ -29,8 +26,21 @@ public class DetectPageHasText extends FindElementAndDoOperation{
             log("element found");
             return true;
         }
+        */
+        return hasElement();
     }
 
+    protected boolean hasElement(){
+        log("hasElement() webElement="+webElement+"  operationData="+operationData);
+        if(webElement == null){
+            return false;
+        }
+        else{
+            return webElement.getText().equals(operationData.getPayload());
+        }
+    }
+
+    /*
     @Override
     protected boolean findElement() throws OperationException{
         findElementByXPath();
@@ -46,7 +56,9 @@ public class DetectPageHasText extends FindElementAndDoOperation{
             webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xPath)));
         }
         catch(TimeoutException timeoutException){
+            log("Timed out !!!");
             throw new OperationException(timeoutException.getMessage());
         }
     }
+    */
 }

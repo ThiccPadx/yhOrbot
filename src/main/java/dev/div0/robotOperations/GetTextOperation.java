@@ -11,13 +11,12 @@ public class GetTextOperation extends FindElementAndDoOperation {
 	@Override
 	protected boolean doOperation() throws OperationException{
 		findElementText();
-		log("element text "+elementText);
-		sendElementText();
+		sendElementTextResult();
 		return true;
 	}
 
-	private void sendElementText() {
-		operationEvent = new OperationEvent(OperationEvent.ELEMENT_TEXT);
+	private void sendElementTextResult() {
+		operationEvent = new OperationEvent(OperationEvent.ELEMENT_TEXT_RESULT);
 		operationEvent.setData(elementText);
 		EventDispatcher.getInstance().dispatchEvent(operationEvent);
 	}
@@ -26,7 +25,7 @@ public class GetTextOperation extends FindElementAndDoOperation {
 		elementText = getElementText();
 	}
 
-	private String getElementText() {
+	protected String getElementText() {
 		return webElement.getText();
 	}
 }

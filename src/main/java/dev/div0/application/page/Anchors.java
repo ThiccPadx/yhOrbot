@@ -10,82 +10,87 @@ import javax.xml.parsers.ParserConfigurationException;
 import dev.div0.logging.BaseLogger;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class Anchors extends BaseLogger{
 	
-	private File file;
-	private Document document;
+	//private File file;
+	private Document anchorsDocument;
 	
 	public void getAnchors(File file) throws ParserConfigurationException, SAXException, IOException{
-		this.file = file;
+		//this.file = file;
 		parse(file);
 
-		log("anchors parse complete. document is "+document);
+		NodeList authNodeList = anchorsDocument.getElementsByTagName("auth");
 
-		if(document == null){
-			log("document is null nothing to parse");
-			log("Anchors complete");
+		Node authNode = authNodeList.item(0);
+
+		if (authNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element eElement = (Element) authNode;
+
+			YahooPage.auth_loginInputId = eElement.getElementsByTagName("loginInputId").item(0).getTextContent();
+			YahooPage.auth_loginBtnId = eElement.getElementsByTagName("loginBtnId").item(0).getTextContent();
+			YahooPage.auth_loginErrorBoxXPath = eElement.getElementsByTagName("loginErrorBoxXPath").item(0).getTextContent();
+			YahooPage.auth_passwordInputXPath = eElement.getElementsByTagName("passwordInputXPath").item(0).getTextContent();
+			YahooPage.auth_submitBtnId = eElement.getElementsByTagName("submitBtnId").item(0).getTextContent();
+			YahooPage.auth_loggedInputId = eElement.getElementsByTagName("loggedInputId").item(0).getTextContent();
+
+			log(YahooPage.auth_loginInputId);
+			log(YahooPage.auth_loginBtnId);
+			log(YahooPage.auth_loginErrorBoxXPath);
+			log(YahooPage.auth_passwordInputXPath);
+			log(YahooPage.auth_submitBtnId);
+			log(YahooPage.auth_loggedInputId);
 		}
 		else{
-			Page.setImNotARobotCheckBoxContainerIFrameXPath(document.getElementsByTagName("imNotARobotCheckBoxContainerIFrameXPath").item(0).getTextContent());
-			Page.setRecaptchaImNotARobotCheckBoxXPath(document.getElementsByTagName("recaptchaImNotARobotCheckBoxXPath").item(0).getTextContent());
-			Page.setRecaptchaCheckBoxID(document.getElementsByTagName("recaptchaCheckBoxID").item(0).getTextContent());
-			Page.setRecaptchaCheckBoxCorrectStyle(document.getElementsByTagName("recaptchaCheckBoxCorrectStyle").item(0).getTextContent());
-			Page.setRecaptchaPayloadIFrameXPath(document.getElementsByTagName("recaptchaPayloadIFrameXPath").item(0).getTextContent());
-			Page.setRecaptchaPayloadImagesTableXPath(document.getElementsByTagName("recaptchaPayloadImagesTableXPath").item(0).getTextContent());
-			Page.setRecaptchaPayloadImagesXPath(document.getElementsByTagName("recaptchaPayloadImagesXPath").item(0).getTextContent());
-			Page.setRecaptchaInstructionsXPath(document.getElementsByTagName("recaptchaInstructionsXPath").item(0).getTextContent());
-			Page.setRecaptchaVerifyButtonXPath(document.getElementsByTagName("recaptchaVerifyButtonXPath").item(0).getTextContent());
-			Page.setRecaptchaVerifyButtonID(document.getElementsByTagName("recaptchaVerifyButtonID").item(0).getTextContent());
-			Page.setRecaptchaImagesTableRowsXPath(document.getElementsByTagName("recaptchaImagesTableRowsXPath").item(0).getTextContent());
-			Page.setRecaptchaImagesTableColumnsXPath(document.getElementsByTagName("recaptchaImagesTableColumnsXPath").item(0).getTextContent());
-			Page.setRecaptchaRectangularImageXPath(document.getElementsByTagName("recaptchaRectangularImageXPath").item(0).getTextContent());
-			Page.setRecaptchaSquareImageXPath(document.getElementsByTagName("recaptchaSquareImageXPath").item(0).getTextContent());
+			log("auth node is not an element node");
+		}
 
-			Page.setCalendarNextMonthButtonXPath(document.getElementsByTagName("calendarNextMonthButtonXPath").item(0).getTextContent());
-			Page.setCalendarPrevMonthButtonXPath(document.getElementsByTagName("calendarPrevMonthButtonXPath").item(0).getTextContent());
-			Page.setCalendarOpenDateAllocatedClass(document.getElementsByTagName("calendarOpenDateAllocatedClass").item(0).getTextContent());
-			Page.setCalendarSelectedMonthNameXPath(document.getElementsByTagName("calendarSelectedMonthNameXPath").item(0).getTextContent());
 
-			Page.setAvailableTimeClass(document.getElementsByTagName("availableTimeClass").item(0).getTextContent());
-			Page.setPtnIsUsedErrorText(document.getElementsByTagName("ptnIsUsed").item(0).getTextContent());
-			Page.setPtnNotFoundErrorText(document.getElementsByTagName("ptnNotFound").item(0).getTextContent());
+		NodeList beddingNodeList = anchorsDocument.getElementsByTagName("bidding");
 
-			// google
-			Page.setGoogleSearchButtonXPath(document.getElementsByTagName("googleSearchButtonXPath").item(0).getTextContent());
-			Page.setGoogleTotalResultsContainerId(document.getElementsByTagName("googleTotalResultsContainerId").item(0).getTextContent());
-			Page.setGoogleSearchInputId(document.getElementsByTagName("googleSearchInputId").item(0).getTextContent());
+		Node beddingNode = beddingNodeList.item(0);
+
+		if (beddingNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element eElement = (Element) beddingNode;
+
+			YahooPage.bidding_makeBidButtonXpath = eElement.getElementsByTagName("makeBidButtonXpath").item(0).getTextContent();
+			YahooPage.bidding_bidMoneyValueCSS = eElement.getElementsByTagName("bidMoneyValueCss").item(0).getTextContent();
+			YahooPage.bidding_blitzBidButtonXpath = eElement.getElementsByTagName("blitzBidButtonXpath").item(0).getTextContent();
+			YahooPage.bidding_blitzBidMoneyValueXPath = eElement.getElementsByTagName("blitzBidMoneyValueXPath").item(0).getTextContent();
+
+			YahooPage.bidding_bidModalSubmitButtonXPath = eElement.getElementsByTagName("bidModalSubmitButtonXPath").item(0).getTextContent();
+			YahooPage.bidding_bidFinalSubmitButtonXPath = eElement.getElementsByTagName("bidFinalSubmitButtonXPath").item(0).getTextContent();
+
+			YahooPage.bidding_bidAlreadySetImageXPath = eElement.getElementsByTagName("bidAlreadySetImageXPath").item(0).getTextContent();
+
+			log("makeBidButtonXpath"+YahooPage.bidding_makeBidButtonXpath);
+			log("bidMoneyValueCss"+YahooPage.bidding_bidMoneyValueCSS);
+			log("blitzBidButtonXpath"+YahooPage.bidding_blitzBidButtonXpath);
+			log("blitzBidMoneyValueXPath"+YahooPage.bidding_blitzBidMoneyValueXPath);
+			log("bidModalSubmitButtonXPath"+YahooPage.bidding_bidModalSubmitButtonXPath);
+			log("bidFinalSubmitButtonXPath"+YahooPage.bidding_bidFinalSubmitButtonXPath);
+			log("bidAlreadySetImageXPath"+YahooPage.bidding_bidAlreadySetImageXPath);
+		}
+		else{
+			log("bidding node is not an element node");
 		}
 	}
 	
 	private void parse(File file) throws ParserConfigurationException, SAXException, IOException{
-		log("parcing anchors");
+		log("parsing anchors");
+
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = null;
-		log("documentBuilderFactory = "+documentBuilderFactory);
+		documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-		try 
-		{
-			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			log("documentBuilder="+documentBuilder);
-			
-		} catch (ParserConfigurationException e1) 
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			logError(e1.getMessage());
-		}
-		
-		try 
-		{
-			document = documentBuilder.parse(file);
-			log("Document = "+document);
-		} 
-		catch (SAXException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logError(e.getMessage());
-		}
+		anchorsDocument = documentBuilder.parse(file);
+
+		//optional, but recommended
+		//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+		anchorsDocument.getDocumentElement().normalize();
 	}
 }

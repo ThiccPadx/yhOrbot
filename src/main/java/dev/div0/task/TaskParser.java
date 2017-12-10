@@ -115,7 +115,8 @@ public class TaskParser extends BaseLogger{
 			ElementSearchType elementSearchType = parseElementSearchType(stepElementSearchTypeString); 
 			log("elementSearchType="+elementSearchType);
 			//log("selectionValue="+selectionValue+"  selectionVisibleText="+selectionVisibleText+" selectionIndex="+selectionIndex);
-			
+
+			log("step data: payload = "+stepPayload+"  action = "+stepAction);
 			StepData stepData = new StepData(Integer.parseInt(stepId), stepDescription, stepPayload, stepAction, elementSearchType, stepElementSearchData, overrideHrefTarget, selectionIndex, selectionValue, selectionVisibleText, stepElementTypeString, elementOffsetPoint, isMainFrame, isRecaptchaPayloadFrame, isRecaptchaImNotARobotCheckBoxContainerFrame);
 			
 			Step step = new Step(stepData);
@@ -157,10 +158,15 @@ public class TaskParser extends BaseLogger{
 		return new Point(pointX, pointY);
 	}
 
-
 	private StepAction parseStepAction(String stepActionString) {
 		if(stepActionString.equals(StepAction.TASK_SETTING.toString())){
 			return StepAction.TASK_SETTING;
+		}
+		if(stepActionString.equals(StepAction.CREATE_AUTH.toString())){
+			return StepAction.CREATE_AUTH;
+		}
+		if(stepActionString.equals(StepAction.CREATE_BEDDING.toString())){
+			return StepAction.CREATE_BEDDING;
 		}
 		if(stepActionString.equals(StepAction.OPEN_URL.toString())){
 			return StepAction.OPEN_URL;
@@ -222,6 +228,9 @@ public class TaskParser extends BaseLogger{
 		else if(stepActionString.equals(StepAction.GET_TEXT.toString())){
 			return StepAction.GET_TEXT;
 		}
+		else if(stepActionString.equals(StepAction.GET_HTML.toString())){
+			return StepAction.GET_HTML;
+		}
 		else if(stepActionString.equals(StepAction.SELECT_CALENDAR_AVAILABLE_DATE.toString())){
 			return StepAction.SELECT_CALENDAR_AVAILABLE_DATE;
 		}
@@ -236,6 +245,9 @@ public class TaskParser extends BaseLogger{
 		}
 		else if(stepActionString.equals(StepAction.DETECT_PAGE_HAS_TEXT.toString())){
 			return StepAction.DETECT_PAGE_HAS_TEXT;
+		}
+		else if(stepActionString.equals(StepAction.HAS_ELEMENT.toString())){
+			return StepAction.HAS_ELEMENT;
 		}
 		return StepAction.UNDEFINED_STEP_ACTION;
 	}
@@ -252,6 +264,9 @@ public class TaskParser extends BaseLogger{
 		}
 		else if(stepElementSearchTypeString.equals(ElementSearchType.BY_NAME.toString())){
 			return ElementSearchType.BY_NAME;
+		}
+		else if(stepElementSearchTypeString.equals(ElementSearchType.BY_CSS_CLASS.toString())){
+			return ElementSearchType.BY_CSS_CLASS;
 		}
 		return null;
 	}

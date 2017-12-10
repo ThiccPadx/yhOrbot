@@ -35,7 +35,7 @@ import org.json.simple.JSONObject;
 
 public class Application implements IEventListener{
 	
-	private String version = "0.7.3";
+	private String version = "0.7.4";
 	
 	//private Tasks tasks = new Tasks();
 	private Task currentTask;
@@ -61,8 +61,7 @@ public class Application implements IEventListener{
 	 * 5 seconds
 	 */
 	public static int baseOperationWaitSecondsUntil = 5; 
-	
-	//private boolean isTestingRecaptcha = false;
+
     private boolean isFake = true;
 	
 	public Application(){		
@@ -92,6 +91,22 @@ public class Application implements IEventListener{
 		
 		EventDispatcher.getInstance().addEventListener(this);
         log("isFake = "+isFake);
+
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("anchorsYhOrbot.xml").getFile());
+		log("anchors file is "+file);
+
+		try {
+
+			new Anchors().getAnchors(file);
+
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		/*
         try
@@ -183,10 +198,6 @@ public class Application implements IEventListener{
 			createTask(clientServerSession, taskData);
 		}
 		startTask();
-		/*
-		taskThread = new Thread(currentTask);
-		taskThread.start();
-		*/
 	}
 	
 	private void createTask(ServerSession clientServerSession, String taskData) {

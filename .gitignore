@@ -1,0 +1,15 @@
+/bin/
+/target/
+/RucaptchaAPI/
+/.settings/
+/.idea/
+/src/main/resources/
+/TODO.txt
+/deploy.bat
+/Consultant.iml
+/.gitignore
+/.project
+WebContent/WEB-INF/
+drivers/opera_old/
+/yhOrbot/
+yhOrbot/
