@@ -2,8 +2,9 @@ package dev.div0.steps;
 
 public enum StepAction {
 	TASK_SETTING("taskSettings"),
+	CREATE_YAHOO_BIDDING_SEQUENCE("createYahooBiddingSequence"),
 	CREATE_AUTH("createAuth"),
-	CREATE_BEDDING("createBedding"),
+	CREATE_BIDDING("createBedding"),
 	OPEN_URL("openUrl"),
 	CLICK_LINK("clickLink"),
 	SWITCH_TO_IFRAME("switchToIframe"),

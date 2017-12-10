@@ -1,7 +1,7 @@
 package dev.div0.robotOperations.factory;
 
 import dev.div0.robotOperations.*;
-import dev.div0.robotOperations.bidding.Bidding;
+import dev.div0.robotOperations.yhOpeartionsSequence.bidding.BiddingOperation;
 import dev.div0.robotOperations.google.GetGoogleSearchResultsTotalOperation;
 import dev.div0.robotOperations.ptn.DetectPtnIsCorrect;
 import dev.div0.robotOperations.recaptcha.GetRecaptchaInstructionsOperation;
@@ -9,6 +9,8 @@ import dev.div0.robotOperations.recaptcha.SaveRecaptchaImageOperation;
 import dev.div0.robotOperations.recaptcha.SolveRecaptchaOperation;
 import dev.div0.robotOperations.recaptcha.SolveRecaptchaWithErrorOperation;
 import dev.div0.robotOperations.screen.TakeScreenshot;
+import dev.div0.robotOperations.yhOpeartionsSequence.AuthOperation;
+import dev.div0.robotOperations.yhOpeartionsSequence.YahooOperationsSequence;
 import dev.div0.steps.StepAction;
 
 public class OperationFactory {
@@ -19,8 +21,11 @@ public class OperationFactory {
 		if(type.equals(StepAction.CREATE_AUTH)){
 			return new AuthOperation();
 		}
-		if(type.equals(StepAction.CREATE_BEDDING)){
-			return new Bidding();
+		if(type.equals(StepAction.CREATE_BIDDING)){
+			return new BiddingOperation();
+		}
+		if(type.equals(StepAction.CREATE_YAHOO_BIDDING_SEQUENCE)){
+			return new YahooOperationsSequence();
 		}
 		else if(type.equals(StepAction.CLICK_LINK)){
 			return new ClickLinkOperation();

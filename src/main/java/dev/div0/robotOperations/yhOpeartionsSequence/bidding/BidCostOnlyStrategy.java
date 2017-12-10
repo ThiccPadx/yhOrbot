@@ -1,4 +1,4 @@
-package dev.div0.robotOperations.bidding;
+package dev.div0.robotOperations.yhOpeartionsSequence.bidding;
 
 
 import org.openqa.selenium.WebDriver;

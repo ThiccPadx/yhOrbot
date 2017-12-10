@@ -1,6 +1,9 @@
-package dev.div0.robotOperations;
+package dev.div0.robotOperations.yhOpeartionsSequence;
 
 import dev.div0.application.page.YahooPage;
+import dev.div0.events.EventDispatcher;
+import dev.div0.robotOperations.*;
+import dev.div0.robotOperations.events.OperationEvent;
 import dev.div0.robotOperations.operationData.OperationData;
 import dev.div0.steps.ElementSearchType;
 import org.json.simple.JSONObject;
@@ -8,7 +11,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.StringReader;
 
-public class AuthOperation extends BaseOperation{
+public class AuthOperation extends BaseOperation {
 
     private final static String LOADING_LOGIN_PAGE = "LOADING_LOGIN_PAGE";
     private final static String ENTERING_LOGIN = "ENTERING_LOGIN";
@@ -29,7 +32,7 @@ public class AuthOperation extends BaseOperation{
 
     public AuthOperation() {
         super();
-        log("Am AuthOperation operationData = "+operationData);
+        log("Am AuthOperation");
     }
 
     @Override
@@ -52,7 +55,7 @@ public class AuthOperation extends BaseOperation{
     }
 
     @Override
-    public boolean execute() throws OperationException{
+    public boolean execute() throws OperationException {
         log("auth execute. currentTryout: "+ currentTryout);
 
         log("loading login page...");
@@ -70,7 +73,6 @@ public class AuthOperation extends BaseOperation{
         boolean isLoginIncorrect = false;
 
         if(!isLogged){
-            log("entering login...");
             boolean enterLoginOperationComplete = enterLoginOperation();
             log("complete entering login with result: "+enterLoginOperationComplete);
             // click button
@@ -78,10 +80,8 @@ public class AuthOperation extends BaseOperation{
             log("complete clickNextButton with result: "+clickNextButtonResult);
 
             // detect is login correct
-            isLoginIncorrect = detectIsUserDataNotCorrect();
-            isLoginIncorrect = !detectPageHasUserDataErrorOperation.hasCssClass("dispNone");
-
-            log("isLoginIncorrect = "+isLoginIncorrect);
+            detectIsUserDataNotCorrect();
+            isLoginIncorrect = detectPageHasUserDataErrorOperation.isElementVisible();
 
             if(!isLoginIncorrect){
                 log("checking has error page content ...");
@@ -91,7 +91,8 @@ public class AuthOperation extends BaseOperation{
         }
 
         if(isLoginIncorrect == true){
-            log("Login incorrect error");
+            OperationEvent operationEvent = new OperationEvent(OperationEvent.LOGIN_INCORRECT);
+            EventDispatcher.getInstance().dispatchEvent(operationEvent);
             return true;
         }
         else{
@@ -101,8 +102,6 @@ public class AuthOperation extends BaseOperation{
             else{
                 authResult = normalLogin();
             }
-
-            log("auth result "+authResult);
 
             if(authResult!=true){
                 currentTryout++;
@@ -125,7 +124,7 @@ public class AuthOperation extends BaseOperation{
         detectPageHasUserDataErrorOperation.setWebDriver(webDriver);
 
         OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_CSS_CLASS);
+        internalOperationData.setElementSearchType(ElementSearchType.BY_ID);
         internalOperationData.setElementSearchData("errMsg");
 
         detectPageHasUserDataErrorOperation.setOperationData(internalOperationData);
@@ -133,7 +132,7 @@ public class AuthOperation extends BaseOperation{
     }
 
     private boolean detectIsLogged() throws OperationException {
-        log("detectIsLogged() webDriver="+webDriver);
+        log("detectIsLogged()");
 
         detectAlreadyLoggedInOperation = new DetectPageHasElementOperation();
         detectAlreadyLoggedInOperation.setWebDriver(webDriver);
@@ -172,24 +171,24 @@ public class AuthOperation extends BaseOperation{
         return clickErrorLoginLinkOperation.execute();
     }
     private boolean normalLogin() throws OperationException {
-        log("normal login password");
+        log("normal login");
         boolean enterPasswordOperation = enterPassword();
         boolean clickSubmitButtonOperation = clickSubmit();
         boolean loginComplete = false;
 
         // detect is password correct
-        boolean isPasswordIncorrect = detectIsUserDataNotCorrect();
+        detectIsUserDataNotCorrect();
+        boolean isPasswordIncorrect = detectPageHasUserDataErrorOperation.isElementVisible();
 
-        log("isPasswordIncorrect = "+isPasswordIncorrect);
         if(isPasswordIncorrect){
-            log("Password incorrect");
-            return false;
+            OperationEvent operationEvent = new OperationEvent(OperationEvent.PASSWORD_INCORRECT);
+            EventDispatcher.getInstance().dispatchEvent(operationEvent);
+            return true;
         }
         else{
             loginComplete = checkLoginComplete();
         }
 
-        log("Login complete: "+loginComplete);
         return loginComplete;
     }
 
@@ -266,6 +265,7 @@ public class AuthOperation extends BaseOperation{
     }
 
     private boolean loadLoginPage() throws OperationException {
+        log("loading auth page "+YahooPage.auth_pageUrl);
         state = LOADING_LOGIN_PAGE;
         OpenUrlOperation operation = new OpenUrlOperation();
         operation.setWebDriver(webDriver);

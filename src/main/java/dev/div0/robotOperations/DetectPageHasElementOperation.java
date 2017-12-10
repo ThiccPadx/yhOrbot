@@ -16,6 +16,26 @@ public class DetectPageHasElementOperation extends DetectPageHasTextOperation {
         return false;
     }
 
+    public boolean isElementVisible(){
+
+        if(webElement == null){
+            return false;
+        }
+
+        try {
+            log("waiting 2 seconds..");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+
+        boolean isVisible = webElement.isDisplayed();
+
+        return isVisible;
+    }
+
     @Override
     protected boolean hasElement(){
         if(webElement==null){

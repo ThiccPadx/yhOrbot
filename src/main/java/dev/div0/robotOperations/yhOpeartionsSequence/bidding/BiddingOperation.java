@@ -1,4 +1,4 @@
-package dev.div0.robotOperations.bidding;
+package dev.div0.robotOperations.yhOpeartionsSequence.bidding;
 
 import dev.div0.application.page.YahooPage;
 import dev.div0.events.BaseEvent;
@@ -13,7 +13,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.StringReader;
 
-public class Bidding extends BaseOperation implements IEventListener {
+public class BiddingOperation extends BaseOperation implements IEventListener {
 
     private int currentTryout = 0;
     private int maxTryouts = 5;
@@ -36,7 +36,7 @@ public class Bidding extends BaseOperation implements IEventListener {
 
     private IBiddingStrategy strategy;
 
-    public Bidding() {
+    public BiddingOperation() {
         super();
         EventDispatcher.getInstance().addEventListener(this);
     }
@@ -44,7 +44,7 @@ public class Bidding extends BaseOperation implements IEventListener {
     @Override
     public void setOperationData(OperationData operationData) {
         super.setOperationData(operationData);
-        log("Bidding payload = "+operationData.getPayload());
+        log("BiddingOperation payload = "+operationData.getPayload());
 
         JSONObject json;
         JSONParser parser = new JSONParser();

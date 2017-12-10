@@ -10,6 +10,8 @@ public class OperationEvent extends BaseEvent {
 	public static String MONTH_SELECTED = "MONTH_SELECTED";
 	public static String ELEMENT_TEXT_RESULT = "ELEMENT_TEXT_RESULT";
 	public static String TIME_SELECTED = "TIME_SELECTED";
+	public static String LOGIN_INCORRECT = "LOGIN_INCORRECT";
+	public static String PASSWORD_INCORRECT = "PASSWORD_INCORRECT";
 	
 	public OperationEvent(String type) {
 		super(type);

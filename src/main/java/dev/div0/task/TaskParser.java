@@ -165,8 +165,11 @@ public class TaskParser extends BaseLogger{
 		if(stepActionString.equals(StepAction.CREATE_AUTH.toString())){
 			return StepAction.CREATE_AUTH;
 		}
-		if(stepActionString.equals(StepAction.CREATE_BEDDING.toString())){
-			return StepAction.CREATE_BEDDING;
+		if(stepActionString.equals(StepAction.CREATE_BIDDING.toString())){
+			return StepAction.CREATE_BIDDING;
+		}
+		if(stepActionString.equals(StepAction.CREATE_YAHOO_BIDDING_SEQUENCE.toString())){
+			return StepAction.CREATE_YAHOO_BIDDING_SEQUENCE;
 		}
 		if(stepActionString.equals(StepAction.OPEN_URL.toString())){
 			return StepAction.OPEN_URL;
