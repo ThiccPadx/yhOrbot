@@ -3,7 +3,10 @@
   <groupId>dev.div0.Consultant</groupId>
   <artifactId>Consultant</artifactId>
   <version>0.0.2</version>
-  <packaging>war</packaging>
+    <modules>
+        <module>tests/detectBidHAsBeenSetTest</module>
+    </modules>
+    <packaging>pom</packaging>
   
   <dependencies>
       <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->

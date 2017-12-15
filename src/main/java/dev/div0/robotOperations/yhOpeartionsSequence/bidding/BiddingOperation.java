@@ -7,6 +7,7 @@ import dev.div0.events.IEventListener;
 import dev.div0.robotOperations.*;
 import dev.div0.robotOperations.events.OperationEvent;
 import dev.div0.robotOperations.operationData.OperationData;
+import dev.div0.robotOperations.yhOpeartionsSequence.bidding.events.BiddingResultEvent;
 import dev.div0.steps.ElementSearchType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -25,8 +26,8 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
     private boolean buttonMakeBidExists = false;
     private boolean buttonBlitzBidExists = false;
 
-    private int betCost = 0;
-    private int blitzCost = 0;
+    private int normalBidCost = 0;
+    private int blitzBidCost = 0;
 
     private String GETTING_BID_COST_VALUE = "GETTING_BID_COST_VALUE";
     private String GETTING_BLITZ_BID_COST_VALUE = "GETTING_BLITZ_BID_COST_VALUE";
@@ -71,8 +72,11 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
         // detect bid already set error
         boolean bidAlreadySet = detectBidAlreadySet();
         log("bid already set: "+bidAlreadySet);
+
         if(bidAlreadySet){
             log("Finish bidding");
+            BiddingResultEvent biddingResultEvent = new BiddingResultEvent(BiddingResultEvent.BID_ALREADY_SET);
+            EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
         }
         else{
             log("detecting page has ButtonBet ...");
@@ -104,34 +108,28 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
     }
 
     private void createStrategy(){
-        strategy = BiddingStrategyFactory.getStrategy(betCost, betCost);
+        strategy = BiddingStrategyFactory.getStrategy(normalBidCost, blitzBidCost);
     }
 
     private boolean detectBidAlreadySet() throws OperationException {
-        DetectPageHasElementOperation detectHasBidAlreadySetOperation = new DetectPageHasElementOperation();
-        detectHasBidAlreadySetOperation.setWebDriver(webDriver);
-
-        OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
-        internalOperationData.setElementSearchData(YahooPage.bidding_bidAlreadySetImageXPath);
-        detectHasBidAlreadySetOperation.setOperationData(internalOperationData);
-
-        return detectHasBidAlreadySetOperation.execute();
+        DetectBidHasBeenSetOperation detectBidHasBeenSet = new DetectBidHasBeenSetOperation();
+        detectBidHasBeenSet.setWebDriver(webDriver);
+        return detectBidHasBeenSet.execute();
     }
 
     private void onElementTextResult(String elementText){
         if(currentState.equals(GETTING_BID_COST_VALUE)){
-            betCost = parseCostData(elementText);
-            log("bidCost="+betCost);
+            normalBidCost = parseCostData(elementText);
+            log("bidCost="+ normalBidCost);
         }
         else if(currentState.equals(GETTING_BLITZ_BID_COST_VALUE)){
-            blitzCost = parseCostData(elementText);
-            log("blitzCost="+blitzCost);
+            blitzBidCost = parseCostData(elementText);
+            log("blitzBidCost="+ blitzBidCost);
         }
         else{
-            betCost = -1;
-            blitzCost = -1;
-            log("LOT_ERROR: undefined bidCost and blitzCost ");
+            normalBidCost = -1;
+            blitzBidCost = -1;
+            log("LOT_ERROR: undefined bidCost and blitzBidCost ");
         }
     }
     private int parseCostData(String data){

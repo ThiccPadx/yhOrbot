@@ -11,6 +11,7 @@ import dev.div0.robotOperations.OperationException;
 import dev.div0.robotOperations.SwitchToDefaultContentOperation;
 import dev.div0.robotOperations.events.OperationEvent;
 import dev.div0.robotOperations.ptn.PTNErrorEvent;
+import dev.div0.robotOperations.yhOpeartionsSequence.events.YahooSequenceEvent;
 import dev.div0.steps.Step;
 import dev.div0.steps.StepException;
 import dev.div0.webDriver.BrowserType;
@@ -136,9 +137,10 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 	protected void taskComplete() {
 		log("Task complete !!!");
 		taskResult.setId(id);
+
 		log("task result "+taskResult.getResult());
+		log("task errorText "+taskResult.getErrorText());
 		log("task payload "+taskResult.getPayload());
-		log("selected month "+taskResult.getMonth()+"  date: "+taskResult.getDay()+"  time: "+taskResult.getTime());
 		
 		TaskEvent taskEvent = new TaskEvent(TaskEvent.TASK_COMPLETE);
 		taskEvent.setData(taskResult);
@@ -237,6 +239,14 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 		else if(event.getType().equals(PTNErrorEvent.NOT_FOUND)){
 			taskResult.setResult(TaskResult.ERROR);
 			taskResult.setErrorText(event.getData().toString());
+		}
+		else if(event.getType().equals(YahooSequenceEvent.ERROR)){
+			taskResult.setResult(TaskResult.ERROR);
+			taskResult.setErrorText(event.getData().toString());
+		}
+		else if(event.getType().equals(YahooSequenceEvent.COMPLETE)){
+			taskResult.setResult(TaskResult.COMPLETE);
+			taskResult.setPayload(event.getData().toString());
 		}
 	}
 

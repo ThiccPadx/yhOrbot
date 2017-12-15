@@ -15,6 +15,7 @@ public class YahooPage {
     public static String bidding_blitzBidMoneyValueXPath = "Price Price--buynow";
 
     public static String bidding_bidModalSubmitButtonXPath = "//*[@id=\"BidModal\"]/div[2]/div[2]/form/div[3]/span/input";
+    public static String bidding_normalBidModalSubmitButtonXPath = "//*[@id=\"BidModals\"]/div[1]/div[2]/div[2]/form/div[3]/span/input";
     public static String bidding_bidFinalSubmitButtonXPath = "//*[@id=\"allContents\"]/div[1]/div[2]/div[2]/form/div[3]/input[1]";
 
     public static String bidding_bidAlreadySetImageXPath = "//*[@id=\"modAlertBox\"]/div/div/div/div/div/div/div/div/div/table/tbody/tr/td[1]/img";
