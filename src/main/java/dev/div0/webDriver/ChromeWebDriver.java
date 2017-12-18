@@ -19,7 +19,7 @@ public class ChromeWebDriver implements IWebDriverProvider {
 			System.setProperty("webdriver.chrome.driver", webDriverPath);
 			webDriver = new ChromeDriver();
 
-			webDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+			webDriver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
 		}
 		return webDriver;
 	}

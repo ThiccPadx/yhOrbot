@@ -1,0 +1,17 @@
+variable
+https://page.auctions.yahoo.co.jp/jp/auction/o215716519
+
+https://page.auctions.yahoo.co.jp/jp/auction/p581919812
+https://page.auctions.yahoo.co.jp/jp/auction/d262126679
+
+normal
+
+https://page.auctions.yahoo.co.jp/jp/auction/d257301546  payed
+https://page.auctions.yahoo.co.jp/jp/auction/p583941742
+https://page.auctions.yahoo.co.jp/jp/auction/o211389645  normal bid
+https://page.auctions.yahoo.co.jp/jp/auction/g244496004  lot closed
+https://page.auctions.yahoo.co.jp/jp/auction/r220275151  lot closed
+
+
+
+

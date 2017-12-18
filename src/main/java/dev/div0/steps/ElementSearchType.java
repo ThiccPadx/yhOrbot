@@ -3,7 +3,8 @@ package dev.div0.steps;
 public enum ElementSearchType {
 	BY_HREF("byHref"), 
 	BY_ID("byId"), 
-	BY_CSS_CLASS("byCssClass"), 
+	BY_CSS_CLASS("byCssClass"),
+	BY_CSS_SELECTOR("byCssSelector"),
 	BY_XPATH("byXPath"), 
 	BY_NAME("byName"), 
 	BY_TAG("byTag"), 

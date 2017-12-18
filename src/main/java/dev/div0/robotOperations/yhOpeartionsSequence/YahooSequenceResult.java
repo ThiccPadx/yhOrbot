@@ -3,6 +3,7 @@ package dev.div0.robotOperations.yhOpeartionsSequence;
 public class YahooSequenceResult {
     private String result;
     private String errorText;
+    private String bidData;
     private String id;
 
     public YahooSequenceResult() {
@@ -31,5 +32,13 @@ public class YahooSequenceResult {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBidData() {
+        return bidData;
+    }
+
+    public void setBidData(String bidData) {
+        this.bidData = bidData;
     }
 }

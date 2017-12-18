@@ -10,6 +10,7 @@ public class YahooPage {
     public static String auth_loggedInputId = "inpUsernameBox";
 
     public static String bidding_makeBidButtonXpath = "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[1]/div[1]/a";
+    public static String bidding_makeNormalBidButtonXpath = "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div/dd/a";
     public static String bidding_bidMoneyValueCSS = "Price Price--current";
     public static String bidding_blitzBidButtonXpath = "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[2]/dd/a";
     public static String bidding_blitzBidMoneyValueXPath = "Price Price--buynow";

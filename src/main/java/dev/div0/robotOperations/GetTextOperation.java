@@ -15,7 +15,11 @@ public class GetTextOperation extends FindElementAndDoOperation {
 		return true;
 	}
 
-	private void sendElementTextResult() {
+	public String getText(){
+		return elementText;
+	}
+
+	protected void sendElementTextResult() {
 		operationEvent = new OperationEvent(OperationEvent.ELEMENT_TEXT_RESULT);
 		operationEvent.setData(elementText);
 		EventDispatcher.getInstance().dispatchEvent(operationEvent);

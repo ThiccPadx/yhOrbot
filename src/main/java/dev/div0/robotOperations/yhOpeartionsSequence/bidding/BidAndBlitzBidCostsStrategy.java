@@ -34,7 +34,6 @@ public class BidAndBlitzBidCostsStrategy extends BaseStrategy{
 
             log("createFinalSubmitButtonClick");
             boolean finalSubmitButtonClicked = createClick(ElementSearchType.BY_XPATH, "//*[@id=\"allContents\"]/div[1]/div[2]/div[2]/form/div[3]/input[1]");
-            //boolean finalSubmitButtonClicked = createFinalSubmitButtonClick();
 
             log("finalSubmitButtonClicked = "+finalSubmitButtonClicked);
 
@@ -50,22 +49,46 @@ public class BidAndBlitzBidCostsStrategy extends BaseStrategy{
                 EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
             }
 
-            log("Bidding complete");
+            log("Blitz Bidding complete");
         }
         else{
-            // create bid click
-            log("Not enough monet for blitz - creating normal bid click...");
-            log("clicking normal bid button");
-            createClick(ElementSearchType.BY_XPATH, YahooPage.bidding_makeBidButtonXpath);
+            if(userMoney<bidCost){
+                // not enough money for any bid
+                log("not enough money for any bid");
+                BiddingResultEvent biddingResultEvent = new BiddingResultEvent(BiddingResultEvent.NOT_ENOUGH_MONEY);
+                EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
+            }
+            else{
+                // create bid click
+                log("Not enough monet for blitz - creating normal bid click...");
+                log("clicking normal bid button");
+                createClick(ElementSearchType.BY_XPATH, YahooPage.bidding_makeBidButtonXpath);
 
-            log("clicking normal bid modal dialog button");
-            createClick(ElementSearchType.BY_XPATH, YahooPage.bidding_normalBidModalSubmitButtonXPath);
+                log("clicking normal bid modal dialog button");
+                createClick(ElementSearchType.BY_XPATH, YahooPage.bidding_normalBidModalSubmitButtonXPath);
+
+                log("clicking submit button for normal bid");
+                boolean finalSubmitButtonClicked = createClick(ElementSearchType.BY_XPATH, "//*[@id=\"allContents\"]/div/div[2]/div[2]/form/div[3]/input[1]");
+
+                boolean bidHasBeenSet = detectBidHasBeenSet();
+
+                log("bidHasBeenSet="+bidHasBeenSet);
+                if(bidHasBeenSet){
+                    log("Normal Bidding complete");
+                    BiddingResultEvent biddingResultEvent = new BiddingResultEvent(BiddingResultEvent.NORMAL_BID_COMPLETE);
+                    EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
+                }
+                else{
+                    log("Normal Bidding error");
+                    BiddingResultEvent biddingResultEvent = new BiddingResultEvent(BiddingResultEvent.NORMAL_BID_ERROR);
+                    EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
+                }
+            }
         }
 
         return true;
     }
 
-    // duplicate of dev/div0/robotOperations/yhOpeartionsSequence/bidding/BiddingOperation.java:110
     private boolean detectBidHasBeenSet() throws OperationException {
         DetectBidHasBeenSetOperation detectBidHasBeenSetOperation = new DetectBidHasBeenSetOperation();
         detectBidHasBeenSetOperation.setWebDriver(webDriver);
@@ -84,44 +107,4 @@ public class BidAndBlitzBidCostsStrategy extends BaseStrategy{
         clickElementOperation.setOperationData(internalOperationData);
         return clickElementOperation.execute();
     }
-
-    /*
-    private boolean createBlitzButtonClick() throws OperationException {
-        ClickElementOperation clickElementOperation = new ClickElementOperation();
-        clickElementOperation.setWebDriver(webDriver);
-
-        OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
-        internalOperationData.setElementSearchData(YahooPage.bidding_blitzBidButtonXpath);
-
-        clickElementOperation.setOperationData(internalOperationData);
-        return clickElementOperation.execute();
-    }
-
-    private boolean createFinalSubmitButtonClick() throws OperationException {
-
-        ClickElementOperation clickElementOperation = new ClickElementOperation();
-        clickElementOperation.setWebDriver(webDriver);
-
-        OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
-        internalOperationData.setElementSearchData("//*[@id=\"allContents\"]/div[1]/div[2]/div[2]/form/div[3]/input[1]");
-
-        clickElementOperation.setOperationData(internalOperationData);
-        return clickElementOperation.execute();
-    }
-
-    private boolean createModalSubmitButtonClick() throws OperationException {
-
-        ClickElementOperation clickElementOperation = new ClickElementOperation();
-        clickElementOperation.setWebDriver(webDriver);
-
-        OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
-        internalOperationData.setElementSearchData(YahooPage.bidding_bidModalSubmitButtonXPath);
-
-        clickElementOperation.setOperationData(internalOperationData);
-        return clickElementOperation.execute();
-    }
-    */
 }

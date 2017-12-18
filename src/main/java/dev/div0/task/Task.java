@@ -58,7 +58,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 	protected void initDefaultTaskResult() {
 		taskResult = new TaskResult();
 		taskResult.setPayload("no payload");
-		taskResult.setErrorText("no error");
+		taskResult.setErrorText(null);
 		taskResult.setResult(TaskResult.IN_PROGRESS);
 		taskResult.setMonth("month not set");
 		taskResult.setDay("day not set");
@@ -245,6 +245,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 			taskResult.setErrorText(event.getData().toString());
 		}
 		else if(event.getType().equals(YahooSequenceEvent.COMPLETE)){
+			log("Task YahooSequenceEvent.COMPLETE");
 			taskResult.setResult(TaskResult.COMPLETE);
 			taskResult.setPayload(event.getData().toString());
 		}

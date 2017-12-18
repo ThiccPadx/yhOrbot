@@ -8,6 +8,7 @@ public class ResultEncoder {
         dataObject.put("result", result.getResult());
         dataObject.put("errorText", result.getErrorText());
         dataObject.put("id", result.getId());
+        dataObject.put("bidData", result.getBidData());
 
         return dataObject.toString();
     }

@@ -23,11 +23,13 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
     private int userMoney = 0;
     private String lotUrl;
 
+    private boolean buttonMakeNormalBidExists = false;
+
     private boolean buttonMakeBidExists = false;
     private boolean buttonBlitzBidExists = false;
 
-    private int normalBidCost = 0;
-    private int blitzBidCost = 0;
+    private int normalBidCost = -1;
+    private int blitzBidCost = -1;
 
     private String GETTING_BID_COST_VALUE = "GETTING_BID_COST_VALUE";
     private String GETTING_BLITZ_BID_COST_VALUE = "GETTING_BLITZ_BID_COST_VALUE";
@@ -79,26 +81,52 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
             EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
         }
         else{
-            log("detecting page has ButtonBet ...");
-            buttonMakeBidExists = detectButtonBetExists();
+            log("detecting page has normal bid button...");
+            buttonMakeBidExists = detectButtonBidExists();
             log("button make bet exists: "+ buttonMakeBidExists);
 
-            log("detecting buttonBlitzBidExists ...");
-            buttonBlitzBidExists = detectButtonBlitzBetExists();
+            log("detecting page has blitz bid button ...");
+            buttonBlitzBidExists = detectButtonBlitzBidExists();
             log("buttonBlitzBidExists: "+ buttonBlitzBidExists);
 
-            currentState = GETTING_BID_COST_VALUE;
-            log("getting bet cost");
-            getBetCost();
+            log("detecting normal bit button exists...");
+            buttonMakeNormalBidExists = detectNormalBidButtonExists();
+            log("buttonMakeNormalBidExists: "+ buttonMakeNormalBidExists);
 
-            currentState = GETTING_BLITZ_BID_COST_VALUE;
-            log("getting blitz bet cost");
-            getBlitzBetCost();
+            boolean normalBidCostExists = detectElementExists(ElementSearchType.BY_XPATH, "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div/dl/dd");
+            boolean normalBidForBidAndBlitzCostExists = detectElementExists(ElementSearchType.BY_XPATH, "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[1]/dl/dd");
+            boolean blitzBidCostExists = detectElementExists(ElementSearchType.BY_XPATH, "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[2]/dl/dd");
 
-            createStrategy();
-            executeStrategy();
+            if(normalBidCostExists){
+                currentState = GETTING_BID_COST_VALUE;
+                log("getting normal bid cost");
+                getBidCost(ElementSearchType.BY_XPATH, "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div/dl/dd");
+            }
+            if(normalBidForBidAndBlitzCostExists){
+                log("getting bid cost");
+                getBidCost(ElementSearchType.BY_XPATH, "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[1]/dl/dd");
+            }
+            if(blitzBidCostExists){
+                currentState = GETTING_BLITZ_BID_COST_VALUE;
+                log("getting blitz bid cost");
+                getBidCost(ElementSearchType.BY_XPATH, "//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[2]/dl/dd");
+            }
+
+            if(!normalBidCostExists && !normalBidForBidAndBlitzCostExists && !blitzBidCostExists){
+                log("Lot closed error");
+                JSONObject eventDataObject = new JSONObject();
+                eventDataObject.put("errorPayload", "NO_BUTTONS_AVAILABLE");
+                BiddingResultEvent biddingResultEvent = new BiddingResultEvent(BiddingResultEvent.LOT_CLOSED);
+                biddingResultEvent.setData(eventDataObject.toString());
+                EventDispatcher.getInstance().dispatchEvent(biddingResultEvent);
+            }
+            else{
+                createStrategy();
+                executeStrategy();
+            }
         }
 
+        log("Bidding complete");
         return true;
     }
 
@@ -136,31 +164,41 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
         String[] parts = data.split("<span");
         String costData = parts[0];
         String costValue = costData.replaceAll("\\D+","");
-        return Integer.parseInt(costValue);
+        try{
+            return Integer.parseInt(costValue);
+        }
+        catch(NumberFormatException exception){
+            return -1;
+        }
     }
 
-    private void getBetCost() throws OperationException {
+    private boolean getBidCost(ElementSearchType type, String xPath) throws OperationException {
         GetTextOperation getHtmlOperation = new GetHtmlOperation();
         getHtmlOperation.setWebDriver(webDriver);
 
         OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
-        internalOperationData.setElementSearchData("//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[1]/dl/dd");
+        internalOperationData.setElementSearchType(type);
+        internalOperationData.setElementSearchData(xPath);
+
+        //internalOperationData.setElementSearchData("//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[1]/dl/dd");
         getHtmlOperation.setOperationData(internalOperationData);
-        getHtmlOperation.execute();
+        return getHtmlOperation.execute();
     }
-    private void getBlitzBetCost() throws OperationException {
-        GetTextOperation getHtmlOperation = new GetHtmlOperation();
-        getHtmlOperation.setWebDriver(webDriver);
+
+    private boolean detectElementExists(ElementSearchType type, String xPath) throws OperationException{
+        DetectPageHasElementOperation detectPageHasElement = new DetectPageHasElementOperation();
+        detectPageHasElement.setWebDriver(webDriver);
 
         OperationData internalOperationData = new OperationData();
-        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
-        internalOperationData.setElementSearchData("//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div[2]/dl/dd");
-        getHtmlOperation.setOperationData(internalOperationData);
-        getHtmlOperation.execute();
+        internalOperationData.setElementSearchType(type);
+        internalOperationData.setElementSearchData(xPath);
+
+        detectPageHasElement.setOperationData(internalOperationData);
+
+        return detectPageHasElement.execute();
     }
 
-    private boolean detectButtonBlitzBetExists() throws OperationException {
+    private boolean detectButtonBlitzBidExists() throws OperationException {
         DetectPageHasElementOperation detectPageHasElement = new DetectPageHasElementOperation();
         detectPageHasElement.setWebDriver(webDriver);
 
@@ -173,7 +211,20 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
         return detectPageHasElement.execute();
     }
 
-    private boolean detectButtonBetExists() throws OperationException {
+    private boolean detectNormalBidButtonExists() throws OperationException{
+        DetectPageHasElementOperation detectPageHasElement = new DetectPageHasElementOperation();
+        detectPageHasElement.setWebDriver(webDriver);
+
+        OperationData internalOperationData = new OperationData();
+        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
+        internalOperationData.setElementSearchData(YahooPage.bidding_makeNormalBidButtonXpath);
+
+        detectPageHasElement.setOperationData(internalOperationData);
+
+        return detectPageHasElement.execute();
+    }
+
+    private boolean detectButtonBidExists() throws OperationException {
         DetectPageHasElementOperation detectPageHasElement = new DetectPageHasElementOperation();
         detectPageHasElement.setWebDriver(webDriver);
 

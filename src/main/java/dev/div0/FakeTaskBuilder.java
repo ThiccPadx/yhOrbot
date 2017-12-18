@@ -13,10 +13,12 @@ public class FakeTaskBuilder {
 	private String pass = "37fmv563";
 	//private String pass = "1234"; // wrong
 
-	private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/w209252785";
+	private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/p583941742";
 	//private String lot_1_Url = "http://yahoorobot/pages/bitAlreadySet_page.html";
 
-	//private String lot_1_Url = "http://yahoorobot/pages/blitz_and_normal_bid_lot_page.html";
+	//private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/o211389645";
+	//private String lot_1_Url = "http://yahoorobot/pages/normalBidPage.html";
+	//private String lot_1_Url = "http://yahoorobot/pages/bidHasBeenResetPage.html";
 	private int money = 470;
 
 	public String build(){
@@ -32,13 +34,14 @@ public class FakeTaskBuilder {
 		settings.put("id", "1");
 		settings.put("isManualFinish", true);
 
+
 		JSONObject yahooBiddingData = new JSONObject();
 		yahooBiddingData.put("login",login);
 		yahooBiddingData.put("pass",pass);
 		yahooBiddingData.put("lotUrl",lot_1_Url);
 		yahooBiddingData.put("userMoney",money);
 
-		/*
+
 		step1.put("id", 0);
 		step1.put("action", StepAction.TASK_SETTING.toString());
 		step1.put("payload", settings.toString());
@@ -49,9 +52,9 @@ public class FakeTaskBuilder {
 
 		array.add(step1);
 		array.add(step2);
-		*/
 
-
+		/*
+		// LOCAL
 		step1.put("id", 0);
 		step1.put("action", StepAction.TASK_SETTING.toString());
 		step1.put("payload", settings.toString());
@@ -62,6 +65,7 @@ public class FakeTaskBuilder {
 
 		array.add(step1);
 		array.add(step2);
+		*/
 
 		return array.toString();
 	}

@@ -17,6 +17,7 @@ public class FindElementAndDoOperation extends BaseOperation {
 	protected boolean isFindElementByHref;
 	protected boolean isFindElementById;
 	protected boolean isFindElementByCssClass;
+	protected boolean isFindElementByCssSelector;
 	protected boolean isFindElementByXPath;
 	protected boolean isFindElementByName;
 	int elementSearchInterval = Application.baseOperationWaitSecondsUntil;
@@ -61,6 +62,7 @@ public class FindElementAndDoOperation extends BaseOperation {
 		isFindElementByCssClass = elementSearchType.equals(ElementSearchType.BY_CSS_CLASS);
 		isFindElementByXPath = elementSearchType.equals(ElementSearchType.BY_XPATH);
 		isFindElementByName = elementSearchType.equals(ElementSearchType.BY_NAME);
+		isFindElementByCssSelector = elementSearchType.equals(ElementSearchType.BY_CSS_SELECTOR);
 		
 		if(isFindElementByHref == true){
 			try{
@@ -87,6 +89,15 @@ public class FindElementAndDoOperation extends BaseOperation {
 			}
 			catch(Exception exception){
 				throw new OperationException("FindElementAndDoOperation by cssClass error. "+exception.getMessage());
+			}
+		}
+		else if(isFindElementByCssSelector == true){
+			try{
+				findElementByCssSelector();
+				return true;
+			}
+			catch(Exception exception){
+				throw new OperationException("FindElementAndDoOperation by cssSelector error. "+exception.getMessage());
 			}
 		}
 		else if(isFindElementByXPath == true){
@@ -149,10 +160,31 @@ public class FindElementAndDoOperation extends BaseOperation {
 
 		//webElement = webDriver.findElement(By.id(id));
 	}
+
+	private void findElementByCssSelector() throws OperationException{
+		String cssSelector = operationData.getElementSearchData();
+
+		log("findElementByCssSelector "+cssSelector);
+
+		WebDriverWait wait = new WebDriverWait(webDriver, elementSearchInterval);
+		try{
+			//webElement = webDriver.findElement(By.className(className));
+			webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)));
+		}
+		catch(Exception exception){
+			throw new OperationException(exception.getMessage());
+		}
+	}
+
+
 	private void findElementByCssClass() throws OperationException{
 		String className = operationData.getElementSearchData();
+
+		WebDriverWait wait = new WebDriverWait(webDriver, elementSearchInterval);
+
 		try{
-			webElement = webDriver.findElement(By.className(className));
+			//webElement = webDriver.findElement(By.className(className));
+			webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.className(className)));
 		}
 		catch(Exception exception){
 			throw new OperationException(exception.getMessage());

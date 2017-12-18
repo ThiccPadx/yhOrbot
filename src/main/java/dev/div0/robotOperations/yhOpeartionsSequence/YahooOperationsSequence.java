@@ -83,6 +83,30 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
         else if(event.getType().equals(BiddingResultEvent.BLITZ_BID_COMPLETE)){
             result.setResult("complete");
         }
+        else if(event.getType().equals(BiddingResultEvent.NORMAL_BID_ERROR)){
+            result.setResult("error");
+            JSONObject dataObject = new JSONObject();
+            dataObject.put("errorDescription", event.getData());
+            dataObject.put("errorText", "NORMAL_BID_NOT_SET_ERROR");
+            result.setErrorText(dataObject.toString());
+        }
+        else if(event.getType().equals(BiddingResultEvent.NORMAL_BID_COMPLETE)){
+            JSONObject dataObject = new JSONObject();
+            dataObject.put("bidData", event.getData());
+            result.setBidData(dataObject.toString());
+            result.setResult("complete");
+        }
+        else if(event.getType().equals(BiddingResultEvent.NOT_ENOUGH_MONEY)){
+            result.setResult("error");
+            result.setErrorText("NOT_ENOUGH_MONEY");
+        }
+        else if(event.getType().equals(BiddingResultEvent.LOT_CLOSED)){
+            result.setResult("error");
+            JSONObject dataObject = new JSONObject();
+            dataObject.put("errorDescription", event.getData());
+            dataObject.put("errorText", "LOT_CLOSED");
+            result.setErrorText(dataObject.toString());
+        }
     }
 
     private boolean createAuth() throws OperationException {
@@ -111,6 +135,12 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
 
     private void onAuthError(){
         log("Auth error "+result.getErrorText());
+        String resultData = ResultEncoder.encode(result);
+        YahooSequenceEvent event = null;
+
+        event = new YahooSequenceEvent(YahooSequenceEvent.ERROR);
+        event.setData(resultData);
+        EventDispatcher.getInstance().dispatchEvent(event);
     }
 
     private void onAuthComplete() throws OperationException {
@@ -121,16 +151,16 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
 
     private void onSequenceComplete(){
         String resultData = ResultEncoder.encode(result);
-        log("On yahoo sequence complete result="+resultData);
+        log("On yahoo sequence complete result="+resultData+"  result.getErrorText() = "+result.getErrorText());
 
         YahooSequenceEvent event = null;
 
         if(result.getErrorText()==null){
-            event = new YahooSequenceEvent(YahooSequenceEvent.ERROR);
+            event = new YahooSequenceEvent(YahooSequenceEvent.COMPLETE);
             event.setData(resultData);
         }
         else{
-            event = new YahooSequenceEvent(YahooSequenceEvent.COMPLETE);
+            event = new YahooSequenceEvent(YahooSequenceEvent.ERROR);
             event.setData(resultData);
         }
         EventDispatcher.getInstance().dispatchEvent(event);
@@ -142,6 +172,7 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
         biddingOperation.setWebDriver(webDriver);
         biddingOperation.setOperationData(operationData);
         boolean biddingComplete = biddingOperation.execute();
+
 
         return biddingComplete;
     }
