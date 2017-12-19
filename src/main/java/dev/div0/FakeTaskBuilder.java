@@ -13,13 +13,15 @@ public class FakeTaskBuilder {
 	private String pass = "37fmv563";
 	//private String pass = "1234"; // wrong
 
-	private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/p583941742";
+	private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/p581919812";
 	//private String lot_1_Url = "http://yahoorobot/pages/bitAlreadySet_page.html";
 
 	//private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/o211389645";
 	//private String lot_1_Url = "http://yahoorobot/pages/normalBidPage.html";
 	//private String lot_1_Url = "http://yahoorobot/pages/bidHasBeenResetPage.html";
-	private int money = 470;
+	//private String lot_1_Url = "http://yahoorobot/pages/blitzOnlyPage.html";
+
+	private int money = 570;
 
 	public String build(){
 

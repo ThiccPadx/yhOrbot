@@ -83,7 +83,7 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
         else{
             log("detecting page has normal bid button...");
             buttonMakeBidExists = detectButtonBidExists();
-            log("button make bet exists: "+ buttonMakeBidExists);
+            log("button make bid exists: "+ buttonMakeBidExists);
 
             log("detecting page has blitz bid button ...");
             buttonBlitzBidExists = detectButtonBlitzBidExists();

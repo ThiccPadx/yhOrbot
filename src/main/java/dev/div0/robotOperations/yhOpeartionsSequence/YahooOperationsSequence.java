@@ -98,7 +98,12 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
         }
         else if(event.getType().equals(BiddingResultEvent.NOT_ENOUGH_MONEY)){
             result.setResult("error");
-            result.setErrorText("NOT_ENOUGH_MONEY");
+
+            JSONObject dataObject = new JSONObject();
+            dataObject.put("errorDescription", event.getData());
+            dataObject.put("errorText", "NOT_ENOUGH_MONEY");
+
+            result.setErrorText(dataObject.toString());
         }
         else if(event.getType().equals(BiddingResultEvent.LOT_CLOSED)){
             result.setResult("error");

@@ -1,17 +1,41 @@
 variable
 https://page.auctions.yahoo.co.jp/jp/auction/o215716519
-
-https://page.auctions.yahoo.co.jp/jp/auction/p581919812
-https://page.auctions.yahoo.co.jp/jp/auction/d262126679
+https://page.auctions.yahoo.co.jp/jp/auction/o216244767
+https://page.auctions.yahoo.co.jp/jp/auction/c632890776
 
 normal
-
+https://page.auctions.yahoo.co.jp/jp/auction/e254646815
+https://page.auctions.yahoo.co.jp/jp/auction/o215556341
 https://page.auctions.yahoo.co.jp/jp/auction/d257301546  payed
-https://page.auctions.yahoo.co.jp/jp/auction/p583941742
-https://page.auctions.yahoo.co.jp/jp/auction/o211389645  normal bid
-https://page.auctions.yahoo.co.jp/jp/auction/g244496004  lot closed
-https://page.auctions.yahoo.co.jp/jp/auction/r220275151  lot closed
+https://page.auctions.yahoo.co.jp/jp/auction/p583941742 many times bid has been reset
+https://page.auctions.yahoo.co.jp/jp/auction/o211389645  normal bid many times bid has been reset
+
+blitz only
+https://page.auctions.yahoo.co.jp/jp/auction/d262126679 already set
+https://page.auctions.yahoo.co.jp/jp/auction/p581919812
+https://page.auctions.yahoo.co.jp/jp/auction/d262305295
+https://page.auctions.yahoo.co.jp/jp/auction/r221635413
 
 
+https://page.auctions.yahoo.co.jp/jp/auction/g244496004
+https://page.auctions.yahoo.co.jp/jp/auction/r220275151
+https://page.auctions.yahoo.co.jp/jp/auction/d262126679
+https://page.auctions.yahoo.co.jp/jp/auction/p581919812
 
 
+ANCHORS
+
+NORMAL ONLY
+NORMAL BID BUTTON
+//*[@id=\"l-sub\"]/div[1]/ul/li[2]/div/dd/a
+
+RESET BID BUTTON
+//*[@id="l-sub"]/div[1]/ul/li[2]/div/div[1]/a
+
+-------------------------------------------------
+BLITZ AND NORMAL
+NORMAL BID BUTTON
+//*[@id="l-sub"]/div[1]/ul/li[2]/div/dd/a
+
+RESET BID BUTTON
+//*[@id="l-sub"]/div[1]/ul/li[2]/div[1]/div[1]/a

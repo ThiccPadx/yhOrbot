@@ -10,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.StringReader;
 
-
 public class ResetBidSequence extends BaseOperation {
 
     private int userMoney = 0;
@@ -174,7 +173,6 @@ public class ResetBidSequence extends BaseOperation {
 
         elementExistsOperation.setOperationData(internalOperationData);
         return elementExistsOperation.execute();
-
     }
 
     private boolean getBidCost(ElementSearchType type, String xPath) throws OperationException {
