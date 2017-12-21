@@ -152,7 +152,6 @@ public class TaskParser extends BaseLogger{
 	}
 
 	private Point getElementOffsetPoint(String stepElementOffsetPointXString, String stepElementOffsetPointYString) {
-		
 		int pointX = Integer.parseInt(stepElementOffsetPointXString);
 		int pointY = Integer.parseInt(stepElementOffsetPointYString);
 		return new Point(pointX, pointY);

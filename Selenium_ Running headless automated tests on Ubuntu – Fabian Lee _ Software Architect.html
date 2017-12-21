@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)https://fabianlee.org/2017/01/17/selenium-running-headless-automated-tests-on-ubuntu/ -->
+<html lang="en-US" class="js" slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+		<script async="" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/analytics.js.Без названия"></script><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Selenium: Running headless automated tests on Ubuntu – Fabian Lee : Software Architect</title>
+<link rel="dns-prefetch" href="https://ajax.googleapis.com/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="alternate" type="application/rss+xml" title="Fabian Lee : Software Architect » Feed" href="https://fabianlee.org/feed/">
+<link rel="alternate" type="application/rss+xml" title="Fabian Lee : Software Architect » Comments Feed" href="https://fabianlee.org/comments/feed/">
+<link rel="stylesheet" id="wp-syntax-css-css" href="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/wp-syntax.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentysixteen-fonts-css" href="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentysixteen-style-css" href="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/style.css" type="text/css" media="all">
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css'  href='https://fabianlee.org/wp-content/themes/twentysixteen/css/ie.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css'  href='https://fabianlee.org/wp-content/themes/twentysixteen/css/ie8.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css'  href='https://fabianlee.org/wp-content/themes/twentysixteen/css/ie7.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="enlighter-local-css" href="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/EnlighterJS.min.css" type="text/css" media="all">
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/jquery.js.Без названия"></script>
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/jquery-migrate.min.js.Без названия"></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='https://fabianlee.org/wp-content/themes/twentysixteen/js/html5.js?ver=3.7.3'></script>
+<![endif]-->
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/mootools.min.js.Без названия"></script>
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/EnlighterJS.min.js.Без названия"></script>
+<link rel="https://api.w.org/" href="https://fabianlee.org/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://fabianlee.org/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://fabianlee.org/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Ubuntu: Silent package installation and debconf" href="https://fabianlee.org/2017/01/16/ubuntu-silent-package-installation-and-debconf/">
+<link rel="next" title="OpenSSL: Using OpenSSL to enumerate protocols and ciphers in use by web applications" href="https://fabianlee.org/2017/01/24/openssl-using-openssl-to-enumerate-protocols-and-ciphers-in-use-by-web-applications/">
+<meta name="generator" content="WordPress 4.9.1">
+<link rel="canonical" href="https://fabianlee.org/2017/01/17/selenium-running-headless-automated-tests-on-ubuntu/">
+<link rel="shortlink" href="https://fabianlee.org/?p=655">
+<script type="text/javascript">/* <![CDATA[ */EnlighterJS_Config = {"selector":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"language":"generic","theme":"enlighter","indent":2,"hover":"hoverEnabled","showLinenumbers":true,"rawButton":true,"infoButton":true,"windowButton":true,"rawcodeDoubleclick":true,"grouping":true,"cryptex":{"enabled":false,"email":"mail@example.tld"}};!function(){var a=function(a){var b="Enlighter Error: ";console.error?console.error(b+a):console.log&&console.log(b+a)};return window.addEvent?"undefined"==typeof EnlighterJS?void a("Javascript Resources not loaded yet!"):"undefined"==typeof EnlighterJS_Config?void a("Configuration not loaded yet!"):void window.addEvent("domready",function(){EnlighterJS.Util.Init(EnlighterJS_Config.selector.block,EnlighterJS_Config.selector.inline,EnlighterJS_Config)}):void a("MooTools Framework not loaded yet!")}();;/* ]]> */</script><!-- BEGIN GADWP v5.1.2.4 Universal Analytics - https://deconf.com/google-analytics-dashboard-wordpress/ -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-80909344-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- END GADWP Universal Analytics -->
+</head>
+
+<body class="post-template-default single single-post postid-655 single-format-standard wp-custom-logo">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="https://fabianlee.org/2017/01/17/selenium-running-headless-automated-tests-on-ubuntu/#content">Skip to content</a>
+
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-header-main">
+				<div class="site-branding">
+					<a href="https://fabianlee.org/" class="custom-logo-link" rel="home" itemprop="url"><img width="46" height="46" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/headshot.png" class="custom-logo" alt="Fabian Lee : Software Architect" itemprop="logo"></a>
+											<p class="site-title"><a href="https://fabianlee.org/" rel="home">Fabian Lee : Software Architect</a></p>
+											<p class="site-description">Cloud Operations and Development</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-categories-container"><ul id="menu-categories" class="primary-menu"><li id="menu-item-897" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-897"><a href="https://fabianlee.org/category/monitoring/">Monitoring</a></li>
+<li id="menu-item-896" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-896"><a href="https://fabianlee.org/category/logging/">Logging</a></li>
+<li id="menu-item-936" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-936"><a href="https://fabianlee.org/category/containers/">Containers</a></li>
+<li id="menu-item-937" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-937"><a href="https://fabianlee.org/category/scripting/">Scripting</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+<article id="post-655" class="post-655 post type-post status-publish format-standard hentry category-devops category-java tag-headless tag-script tag-selenium tag-testing tag-tests">
+	<header class="entry-header">
+		<h1 class="entry-title">Selenium: Running headless automated tests on Ubuntu</h1>	</header><!-- .entry-header -->
+
+	
+	
+	<div class="entry-content">
+		<p><img class=" wp-image-656 alignleft" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/selium-logo.png" alt="" width="92" height="83"><a href="http://www.seleniumhq.org/">Selenium</a> is an open-source solution for automating the browser allowing you to run continuous integration tests, validate performance and scalability, and perform regression testing of web applications.</p>
+<p>This kind of automated testing is useful not only from desktop systems, but also from server machines where you may want to monitor availability or correctness of returned pages.&nbsp; For example, web site response monitoring or as part of a <a href="http://alex.nederlof.com/blog/2012/11/19/installing-selenium-with-jenkins-on-ubuntu/">Jenkins validation pipeline</a>.</p>
+<p>The first method we can use to accomplish this is to use a headless driver such as the <a href="https://github.com/SeleniumHQ/htmlunit-driver">HtmlUnit</a> or <a href="http://phantomjs.org/">PhantomJS</a> driver – these are tiny browser implementations that load and execute web pages but do not actually draw the results to a screen.</p>
+<p>The second method is specific to Linux based systems, where you use the actual Chrome browser.&nbsp; The trick is to use <a href="https://en.wikipedia.org/wiki/Xvfb">Xvfb</a> as a virtualized display.</p>
+<p><span id="more-655"></span></p>
+<h3>Project Installation</h3>
+<p>I’ve put a <a href="https://github.com/fabianlee/seleniumheadless">Maven project up on github</a> to accompany this article.&nbsp; Below are instructions for Ubuntu,&nbsp; feel free to translate for your own Linux flavor or Windows. First we make sure that a Git client, Java7, and Maven are installed.&nbsp; Then use Maven to download all the dependencies and build the project.</p>
+<pre>&gt; sudo apt-get install git openjdk-7-jdk maven -y
+&gt; git clone https://github.com/fabianlee/seleniumheadless.git
+&gt; cd seleniumheadless
+&gt; mvn package</pre>
+<p>This project can also be imported into Eclipse (File &gt; Import &gt; Exiting Maven Project).&nbsp; The only thing that won’t work on Windows is the headless Chrome sample.&nbsp; On Windows, Chrome will be visible.</p>
+<h3>Project Overview</h3>
+<p>The Selenium WebDriver pulls up google.com, does a search for “fabianlee.org blog”, and then gets the page title of the results page.&nbsp; If we were using a standard browser, the final page would look like the screenshot below (with the page title highlighted):</p>
+<p><img class="alignnone size-full wp-image-732" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/google-search-results-fabianleeorg-blog.png" alt="" width="472" height="201" srcset="https://fabianlee.org/wp-content/uploads/2017/01/google-search-results-fabianleeorg-blog.png 472w, https://fabianlee.org/wp-content/uploads/2017/01/google-search-results-fabianleeorg-blog-300x128.png 300w" sizes="(max-width: 472px) 85vw, 472px"></p>
+<p>The same functionality can be accomplished using Selenium code:</p>
+<p></p><pre data-enlighter-language="java" class="EnlighterJSRAW" style="display: none;">
+// choose which driver to use
+WebDriver webDriver = getWebDriver(whichBrowser);
+
+// run test
+webDriver.get("http://www.google.com");
+// identify search textbox
+WebElement element = webDriver.findElement(By.name("q"));
+// do search
+element.sendKeys("fabianlee.org blog");
+element.submit();
+
+// wait and then check the page title of the results page
+Thread.sleep(2000);
+System.out.println("******************************************");
+System.out.println("Page title of results using " + whichBrowser + ": " + webDriver.getTitle());
+System.out.println("******************************************");
+
+// close browser
+webDriver.quit();
+
+</pre><div class="EnlighterJSWrapper enlighterEnlighterJSWrapper"><ol class="hoverEnabled enlighterEnlighterJS EnlighterJS"><li class=" odd"><span class="co1">// choose which driver to use</span><span class=""></span></li><li class=" even"><span class="">WebDriver webDriver = </span><span class="kw1">getWebDriver</span><span class="br0">(</span><span class="">whichBrowser</span><span class="br0">)</span><span class="">;</span></li><li class=" odd"><span class=""></span><span class="co1"></span></li><li class=" even"><span class="co1">// run test</span><span class=""></span></li><li class=" odd"><span class="">webDriver.</span><span class="me0">get</span><span class="br0">(</span><span class="st1">"http://www.google.com"</span><span class="br0">)</span><span class="">;</span><span class="co1"></span></li><li class=" even"><span class="co1">// identify search textbox</span><span class=""></span></li><li class=" odd"><span class="">WebElement element = webDriver.</span><span class="kw1">findElement</span><span class="br0">(</span><span class="">By.</span><span class="me0">name</span><span class="br0">(</span><span class="st1">"q"</span><span class="br0">)</span><span class="br0">)</span><span class="">;</span><span class="co1"></span></li><li class=" even"><span class="co1">// do search</span><span class=""></span></li><li class=" odd"><span class="">element.</span><span class="me0">sendKeys</span><span class="br0">(</span><span class="st1">"fabianlee.org blog"</span><span class="br0">)</span><span class="">;</span></li><li class=" even"><span class="">element.</span><span class="me0">submit</span><span class="br0">(</span><span class="br0">)</span><span class="">;</span></li><li class=" odd"><span class=""></span><span class="co1"></span></li><li class=" even"><span class="co1">// wait and then check the page title of the results page</span><span class=""></span></li><li class=" odd"><span class="">Thread.</span><span class="me0">sleep</span><span class="br0">(</span><span class="nu0">2000</span><span class="br0">)</span><span class="">;</span></li><li class=" even"><span class=""></span><span class="kw4">System</span><span class="">.</span><span class="me0">out</span><span class="">.</span><span class="me0">println</span><span class="br0">(</span><span class="st1">"******************************************"</span><span class="br0">)</span><span class="">;</span></li><li class=" odd"><span class=""></span><span class="kw4">System</span><span class="">.</span><span class="me0">out</span><span class="">.</span><span class="kw1">println</span><span class="br0">(</span><span class="st1">"Page title of results using "</span><span class=""> + whichBrowser + </span><span class="st1">": "</span><span class=""> + webDriver.</span><span class="me0">getTitle</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="">;</span></li><li class=" even"><span class=""></span><span class="kw4">System</span><span class="">.</span><span class="me0">out</span><span class="">.</span><span class="me0">println</span><span class="br0">(</span><span class="st1">"******************************************"</span><span class="br0">)</span><span class="">;</span></li><li class=" odd"><span class=""></span><span class="co1"></span></li><li class=" even"><span class="co1">// close browser</span><span class=""></span></li><li class=" odd"><span class="">webDriver.</span><span class="kw1">quit</span><span class="br0">(</span><span class="br0">)</span><span class="">;</span></li></ol><pre style="display: none;">// choose which driver to use
+WebDriver webDriver = getWebDriver(whichBrowser);
+
+// run test
+webDriver.get("http://www.google.com");
+// identify search textbox
+WebElement element = webDriver.findElement(By.name("q"));
+// do search
+element.sendKeys("fabianlee.org blog");
+element.submit();
+
+// wait and then check the page title of the results page
+Thread.sleep(2000);
+System.out.println("******************************************");
+System.out.println("Page title of results using " + whichBrowser + ": " + webDriver.getTitle());
+System.out.println("******************************************");
+
+// close browser
+webDriver.quit();</pre><div class="EnlighterJSToolbar"><a class="EnlighterJSInfoButton" title="EnlighterJS Syntax Highlighter"></a><a class="EnlighterJSRawButton" title="Toggle RAW Code"></a><a class="EnlighterJSWindowButton" title="Open Code in new Window"></a><span class="clear"></span></div></div><p></p>
+<h3>HtmlUnit Driver</h3>
+<p><a href="http://htmlunit.sourceforge.net/">HtmlUnit</a> is a Java based browser emulator.&nbsp; It is fully functional, and is capable of retrieving pages, filling out forms, dealing with frame, and executing Javascript.&nbsp; It does a nice job of emulating most browser functionality, but you may start to run into issues with complex AJAX and modern Javascript driven applications.</p>
+<p>To run our web scenario using HtmlUnit:</p>
+<pre>&gt; mvn exec:java -Dexec.args="htmlunit"</pre>
+<p>There will be CSS warnings we can ignore, but the last line should show:</p>
+<pre>******************************************
+Page title of results using htmlunit: fabianlee.org blog - Google Search
+******************************************</pre>
+<h3>PhantomJS Driver</h3>
+<p>The <a href="http://phantomjs.org/faq.html">PhantomJS</a> driver uses the WebKit module for web functionality.&nbsp; You must therefore download it, and tell Java where to find it.</p>
+<p><a href="http://phantomjs.org/download.html">Download you version from here</a>, move it to the /tmp directory, then follow these instructions for Ubuntu:</p>
+<pre>&gt; sudo apt-get install openjdk-7-jdk fontconfig libfontconfig -y
+&gt; cd /tmp
+&gt; tar xvfj phantomjs-2.1.1-linux-x86_64.tar.bz2</pre>
+<p>Now you have ‘/tmp/phantomjs-2.1.1-linux-x86_64/bin/phantomjs’ which corresponds to the path in seleniumheadless/src/main/resources/path.properties</p>
+<p>Run the web scenario using the PhantomJS WebKit module:</p>
+<pre>&gt; mvn exec:java -Dexec.args="phantomjs"</pre>
+<p>You will see some informational debug, and the last line will look like:</p>
+<pre>******************************************
+Page title of results using phantomjs: fabianlee.org blog - Google Search
+******************************************</pre>
+<h3>Chrome Driver Headless</h3>
+<p>Using the Selenium Chrome Driver is easy when you have a Windows or&nbsp; Ubuntu desktop running a graphical desktop – Chrome pops-up, the test is executed, and the browser is closed.</p>
+<p>But what we want to do is run a Chrome browser process on a console-only server host.&nbsp; This is possible, but the trick is we must first run ‘Xvfb’, which use a <a href="https://en.wikipedia.org/wiki/Xvfb">virtual frame buffer</a> and implements the X11 display server protocol.&nbsp; So even though we can’t see the display, the drawing is happening in a virtual display.</p>
+<h4>Install Chrome</h4>
+<p>Get the Google key:</p>
+<pre>&gt; wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -</pre>
+<p>Add the Google repository, install packages:</p>
+<pre>&gt; sudo sh -c 'echo deb http://dl.google.com/linux/chrome/deb/ stable main &gt; /etc/apt/sources.list.d/google.list'
+&gt; sudo apt-get update
+&gt; sudo apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic xvfb x11-apps imagemagick firefox google-chrome-stable</pre>
+<h4>Download Chrome WebDriver</h4>
+<p>From the <a href="https://sites.google.com/a/chromium.org/chromedriver/">ChromeDriver site</a>, download get the latest zip package for your platform and put it in the /tmp folder of your target host.</p>
+<pre>&gt; cd /tmp
+&gt; apt-get install unzip -y
+&gt; unzip chromedriver_linux64.zip</pre>
+<p>This will give you ‘/tmp/chromedriver’, which corresponds to the path in seleniumheadless/src/main/resources/path.properties.</p>
+<h4>Virtual Frame Buffer</h4>
+<p>The last piece is to start Xvfb, which is a virtual framebuffer.&nbsp; This means that even though we are on a console-only server host, Chrome will still have a place to “draw”.</p>
+<p>Start a separate ssh session to the host, and run:</p>
+<pre>/usr/bin/Xvfb :99 -ac -screen 0 1024x768x8</pre>
+<p>This starts an X server using display :99.&nbsp; If you want to put this into an init.d script on startup, see the <a href="http://alex.nederlof.com/blog/2012/11/19/installing-selenium-with-jenkins-on-ubuntu/">blog entry here</a>.</p>
+<h4>Validate Headless Chrome</h4>
+<p>Finally, we are ready to run the web scenario using the Chrome driver:</p>
+<pre>&gt; export DISPLAY=:99
+&gt; mvn exec:java -Dexec.args="chrome"</pre>
+<p>You will see some informational debug, and the last line will look like:</p>
+<pre>******************************************
+Page title of results using chrome: fabianlee.org blog - Google Search
+******************************************</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>REFERENCES</p>
+<p><a href="http://www.seleniumhq.org/download">http://www.seleniumhq.org/download</a></p>
+<p><a href="https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/">https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/</a></p>
+<p><a href="http://www.seleniumhq.org/download">http://alex.nederlof.com/blog/2012/11/19/installing-selenium-with-jenkins-on-ubuntu/</a></p>
+<p><a href="https://github.com/vmi/selenese-runner-java">https://github.com/vmi/selenese-runner-java</a></p>
+<p><a href="http://www.guru99.com/selenium-with-htmlunit-driver-phantomjs.html">http://www.guru99.com/selenium-with-htmlunit-driver-phantomjs.html</a></p>
+<p><a href="https://github.com/bonigarcia/webdrivermanager">https://github.com/bonigarcia/webdrivermanager</a></p>
+<p><a href="https://mvnrepository.com/search?q=selenium">https://mvnrepository.com/search?q=selenium</a></p>
+<p><a href="http://phantomjs.org/download.html">http://phantomjs.org/download.html</a></p>
+<p><a href="http://yslow.org/phantomjs/">http://yslow.org/phantomjs/</a></p>
+<p><a href="https://code.tutsplus.com/tutorials/headless-functional-testing-with-selenium-and-phantomjs--net-30545">https://code.tutsplus.com/tutorials/headless-functional-testing-with-selenium-and-phantomjs–net-30545</a></p>
+<p><a href="https://sites.google.com/a/chromium.org/chromedriver/">https://sites.google.com/a/chromium.org/chromedriver/</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Xvfb">https://en.wikipedia.org/wiki/Xvfb</a></p>
+<blockquote data-secret="tdDH6Mjlxu" class="wp-embedded-content"><p><a href="http://www.chrisle.me/2013/08/5-reasons-i-chose-selenium-over-phantomjs/">5 Reasons I Chose Selenium over PhantomJS</a></p></blockquote>
+<p><iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/saved_resource.html" data-secret="tdDH6Mjlxu" width="600" height="338" title="“5 Reasons I Chose Selenium over PhantomJS” — Chris Le" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<span class="byline"><span class="author vcard"><span class="screen-reader-text">Author </span> <a class="url fn n" href="https://fabianlee.org/author/admin/">Fabian</a></span></span><span class="posted-on"><span class="screen-reader-text">Posted on </span><a href="https://fabianlee.org/2017/01/17/selenium-running-headless-automated-tests-on-ubuntu/" rel="bookmark"><time class="entry-date published" datetime="2017-01-17T17:58:28+00:00">January 17, 2017</time><time class="updated" datetime="2017-01-17T18:19:59+00:00">January 17, 2017</time></a></span><span class="cat-links"><span class="screen-reader-text">Categories </span><a href="https://fabianlee.org/category/devops/" rel="category tag">DevOps</a>, <a href="https://fabianlee.org/category/java/" rel="category tag">Java</a></span><span class="tags-links"><span class="screen-reader-text">Tags </span><a href="https://fabianlee.org/tag/headless/" rel="tag">headless</a>, <a href="https://fabianlee.org/tag/script/" rel="tag">script</a>, <a href="https://fabianlee.org/tag/selenium/" rel="tag">selenium</a>, <a href="https://fabianlee.org/tag/testing/" rel="tag">testing</a>, <a href="https://fabianlee.org/tag/tests/" rel="tag">tests</a></span>			</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://fabianlee.org/2017/01/16/ubuntu-silent-package-installation-and-debconf/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous</span> <span class="screen-reader-text">Previous post:</span> <span class="post-title">Ubuntu: Silent package installation and debconf</span></a></div><div class="nav-next"><a href="https://fabianlee.org/2017/01/24/openssl-using-openssl-to-enumerate-protocols-and-ciphers-in-use-by-web-applications/" rel="next"><span class="meta-nav" aria-hidden="true">Next</span> <span class="screen-reader-text">Next post:</span> <span class="post-title">OpenSSL: Using OpenSSL to enumerate protocols and ciphers in use by web applications</span></a></div></div>
+	</nav>
+	</main><!-- .site-main -->
+
+	
+</div><!-- .content-area -->
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary">
+		<section id="search-2" class="widget widget_search">
+<form role="search" method="get" class="search-form" action="https://fabianlee.org/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search …" value="" name="s">
+	</label>
+	<button type="submit" class="search-submit"><span class="screen-reader-text">Search</span></button>
+</form>
+</section><section id="similar_posts_widget" class="widget widget_rrm_similar_posts"><h2 class="widget-title">Related articles</h2><ul><li><a href="https://fabianlee.org/2017/04/17/elk-running-elastalert-as-a-service-on-ubuntu-14-04/" rel="bookmark" title="April 17, 2017">ELK: Running ElastAlert as a service on Ubuntu 14.04</a></li>
+
+<li><a href="https://fabianlee.org/2017/05/20/golang-running-a-go-binary-as-a-sysv-service-on-ubuntu-14-04/" rel="bookmark" title="May 20, 2017">GoLang: Running a Go binary as a SysV service on Ubuntu 14.04</a></li>
+
+<li><a href="https://fabianlee.org/2017/02/21/jenkins-setting-up-a-continuous-integration-server-on-ubuntu/" rel="bookmark" title="February 21, 2017">Jenkins: Setting up a continuous integration server on Ubuntu</a></li>
+
+<li><a href="https://fabianlee.org/2017/05/21/golang-running-a-go-binary-as-a-systemd-service-on-ubuntu-16-04/" rel="bookmark" title="May 21, 2017">GoLang: Running a Go binary as a systemd service on Ubuntu 16.04</a></li>
+
+<li><a href="https://fabianlee.org/2016/10/31/saltstack-running-a-masterless-minion-on-ubuntu/" rel="bookmark" title="October 31, 2016">SaltStack: Running a masterless minion on Ubuntu</a></li>
+</ul><!-- Similar Posts took 18.042 ms --></section><section id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title">Tags</h2><div class="tagcloud"><a href="https://fabianlee.org/tag/appdynamics/" class="tag-cloud-link tag-link-230 tag-link-position-1" style="font-size: 1em;">appdynamics</a>
+<a href="https://fabianlee.org/tag/authentication/" class="tag-cloud-link tag-link-333 tag-link-position-2" style="font-size: 1em;">authentication</a>
+<a href="https://fabianlee.org/tag/boot/" class="tag-cloud-link tag-link-436 tag-link-position-3" style="font-size: 1em;">boot</a>
+<a href="https://fabianlee.org/tag/client/" class="tag-cloud-link tag-link-210 tag-link-position-4" style="font-size: 1em;">client</a>
+<a href="https://fabianlee.org/tag/cloud-foundry/" class="tag-cloud-link tag-link-613 tag-link-position-5" style="font-size: 1em;">cloud foundry</a>
+<a href="https://fabianlee.org/tag/custom/" class="tag-cloud-link tag-link-245 tag-link-position-6" style="font-size: 1em;">custom</a>
+<a href="https://fabianlee.org/tag/data/" class="tag-cloud-link tag-link-197 tag-link-position-7" style="font-size: 1em;">data</a>
+<a href="https://fabianlee.org/tag/documentum/" class="tag-cloud-link tag-link-5 tag-link-position-8" style="font-size: 1em;">documentum</a>
+<a href="https://fabianlee.org/tag/elasticsearch/" class="tag-cloud-link tag-link-206 tag-link-position-9" style="font-size: 1em;">elasticsearch</a>
+<a href="https://fabianlee.org/tag/elk/" class="tag-cloud-link tag-link-181 tag-link-position-10" style="font-size: 1em;">elk</a>
+<a href="https://fabianlee.org/tag/flash/" class="tag-cloud-link tag-link-57 tag-link-position-11" style="font-size: 1em;">flash</a>
+<a href="https://fabianlee.org/tag/golang/" class="tag-cloud-link tag-link-521 tag-link-position-12" style="font-size: 1em;">golang</a>
+<a href="https://fabianlee.org/tag/go-programming-language/" class="tag-cloud-link tag-link-552 tag-link-position-13" style="font-size: 1em;">go programming language</a>
+<a href="https://fabianlee.org/tag/grok/" class="tag-cloud-link tag-link-28 tag-link-position-14" style="font-size: 1em;">grok</a>
+<a href="https://fabianlee.org/tag/image/" class="tag-cloud-link tag-link-110 tag-link-position-15" style="font-size: 1em;">image</a>
+<a href="https://fabianlee.org/tag/install/" class="tag-cloud-link tag-link-233 tag-link-position-16" style="font-size: 1em;">install</a>
+<a href="https://fabianlee.org/tag/integration/" class="tag-cloud-link tag-link-285 tag-link-position-17" style="font-size: 1em;">integration</a>
+<a href="https://fabianlee.org/tag/java/" class="tag-cloud-link tag-link-14 tag-link-position-18" style="font-size: 1em;">java</a>
+<a href="https://fabianlee.org/tag/linksys/" class="tag-cloud-link tag-link-51 tag-link-position-19" style="font-size: 1em;">linksys</a>
+<a href="https://fabianlee.org/tag/linux/" class="tag-cloud-link tag-link-82 tag-link-position-20" style="font-size: 1em;">linux</a>
+<a href="https://fabianlee.org/tag/log/" class="tag-cloud-link tag-link-32 tag-link-position-21" style="font-size: 1em;">log</a>
+<a href="https://fabianlee.org/tag/logging/" class="tag-cloud-link tag-link-63 tag-link-position-22" style="font-size: 1em;">logging</a>
+<a href="https://fabianlee.org/tag/logstash/" class="tag-cloud-link tag-link-27 tag-link-position-23" style="font-size: 1em;">logstash</a>
+<a href="https://fabianlee.org/tag/management/" class="tag-cloud-link tag-link-348 tag-link-position-24" style="font-size: 1em;">management</a>
+<a href="https://fabianlee.org/tag/metrics/" class="tag-cloud-link tag-link-46 tag-link-position-25" style="font-size: 1em;">metrics</a>
+<a href="https://fabianlee.org/tag/minion/" class="tag-cloud-link tag-link-103 tag-link-position-26" style="font-size: 1em;">minion</a>
+<a href="https://fabianlee.org/tag/netcat/" class="tag-cloud-link tag-link-139 tag-link-position-27" style="font-size: 1em;">netcat</a>
+<a href="https://fabianlee.org/tag/network/" class="tag-cloud-link tag-link-86 tag-link-position-28" style="font-size: 1em;">network</a>
+<a href="https://fabianlee.org/tag/node/" class="tag-cloud-link tag-link-153 tag-link-position-29" style="font-size: 1em;">node</a>
+<a href="https://fabianlee.org/tag/openwrt/" class="tag-cloud-link tag-link-55 tag-link-position-30" style="font-size: 1em;">openwrt</a>
+<a href="https://fabianlee.org/tag/package/" class="tag-cloud-link tag-link-155 tag-link-position-31" style="font-size: 1em;">package</a>
+<a href="https://fabianlee.org/tag/proxy/" class="tag-cloud-link tag-link-418 tag-link-position-32" style="font-size: 1em;">proxy</a>
+<a href="https://fabianlee.org/tag/python/" class="tag-cloud-link tag-link-236 tag-link-position-33" style="font-size: 1em;">python</a>
+<a href="https://fabianlee.org/tag/router/" class="tag-cloud-link tag-link-52 tag-link-position-34" style="font-size: 1em;">router</a>
+<a href="https://fabianlee.org/tag/saltstack/" class="tag-cloud-link tag-link-102 tag-link-position-35" style="font-size: 1em;">saltstack</a>
+<a href="https://fabianlee.org/tag/security/" class="tag-cloud-link tag-link-218 tag-link-position-36" style="font-size: 1em;">security</a>
+<a href="https://fabianlee.org/tag/service/" class="tag-cloud-link tag-link-300 tag-link-position-37" style="font-size: 1em;">service</a>
+<a href="https://fabianlee.org/tag/spring/" class="tag-cloud-link tag-link-294 tag-link-position-38" style="font-size: 1em;">spring</a>
+<a href="https://fabianlee.org/tag/ssh/" class="tag-cloud-link tag-link-240 tag-link-position-39" style="font-size: 1em;">ssh</a>
+<a href="https://fabianlee.org/tag/syslog/" class="tag-cloud-link tag-link-178 tag-link-position-40" style="font-size: 1em;">syslog</a>
+<a href="https://fabianlee.org/tag/test/" class="tag-cloud-link tag-link-152 tag-link-position-41" style="font-size: 1em;">test</a>
+<a href="https://fabianlee.org/tag/tls/" class="tag-cloud-link tag-link-125 tag-link-position-42" style="font-size: 1em;">tls</a>
+<a href="https://fabianlee.org/tag/ubuntu/" class="tag-cloud-link tag-link-17 tag-link-position-43" style="font-size: 1em;">ubuntu</a>
+<a href="https://fabianlee.org/tag/windows/" class="tag-cloud-link tag-link-9 tag-link-position-44" style="font-size: 1em;">windows</a>
+<a href="https://fabianlee.org/tag/zabbix/" class="tag-cloud-link tag-link-281 tag-link-position-45" style="font-size: 1em;">zabbix</a></div>
+</section>		<section id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">Recent Posts</h2>		<ul>
+											<li>
+					<a href="https://fabianlee.org/2017/12/09/cloudfoundry-enabling-java-jmx-rmi-access-for-remote-containers/">CloudFoundry: Enabling Java JMX/RMI access for remote containers</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/12/08/cloudfoundry-java-thread-and-heap-dump-analysis-on-remote-containers/">CloudFoundry: Java thread and heap dump analysis on remote containers</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/12/08/cloudfoundry-enabling-java-remote-debugging-with-eclipse/">CloudFoundry: Enabling Java remote debugging with Eclipse</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/12/07/cloudfoundry-monitoring-the-spring-music-webapp-part-5/">CloudFoundry: Monitoring the spring-music webapp, Part 5</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/12/06/cloudfoundry-logging-for-the-spring-music-webapp-part-4/">CloudFoundry: Logging for the spring-music webapp, Part 4</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/11/30/cloudfoundry-exploring-cloud-foundry-using-the-spring-music-application/">CloudFoundry: Exploring Cloud Foundry using the spring-music application</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/11/30/cloudfoundry-scaling-the-spring-music-webapp-part-3/">CloudFoundry: Scaling the spring-music webapp, Part 3</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/11/16/cloudfoundry-persisting-spring-music-data-using-postgres-service-part-2/">CloudFoundry: Persisting spring-music data using Postgres service, Part 2</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/11/13/cloudfoundry-pcf-dev-for-local-development-on-ubuntu/">CloudFoundry: PCF Dev for local development on Ubuntu</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/11/09/cloudfoundry-deploying-the-spring-music-webapp-part-1/">CloudFoundry: Deploying the spring-music webapp, Part 1</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/10/16/haproxy-zero-downtime-reloads-with-haproxy-1-8-on-ubuntu-16-04-with-systemd/">HAProxy: Zero downtime reloads with HAProxy 1.8 on Ubuntu 16.04 with Systemd</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/10/15/haproxy-zero-downtime-reloads-with-haproxy-1-8-on-ubuntu-14-04/">HAProxy: Zero downtime reloads with HAProxy 1.8 on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/10/06/saltstack-installing-an-older-salt-master-or-minion-for-compatibility/">SaltStack: Installing an older Salt Master or Minion for compatibility</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/10/05/windows-windows-2012-sysprep-for-vagrant-readiness/">Windows: Windows 2012 Sysprep for Vagrant readiness</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/10/02/ubuntu-standing-up-a-windows-2012-instance-on-ubuntu-using-sysprep/">Ubuntu: Standing up a Windows 2012 instance on Ubuntu using Sysprep</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/09/23/ubuntu-installing-the-genymotion-android-emulator/">Ubuntu: Installing the Genymotion Android emulator</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/09/23/ubuntu-installing-tor-on-ubuntu-14-04-and-16-04/">Ubuntu: Installing Tor on Ubuntu 14.04 and 16.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/06/22/ubuntu-testing-authenticated-smtp-over-tlsssl/">Ubuntu: Testing authenticated SMTP over TLS/SSL</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/06/06/ansible-installing-ansible-on-ubuntu-16-04/">Ansible: Installing Ansible on Ubuntu 16.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/06/05/ansible-managing-a-windows-host-using-ansible/">Ansible: Managing a Windows host using Ansible</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/06/04/ansible-installing-ansible-on-ubuntu-14-04/">Ansible: Installing Ansible on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/29/zabbix-lld-low-level-discovery-returning-multiple-values/">Zabbix: LLD low-level discovery returning multiple values</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/24/ubuntu-enabling-syslog-on-ubuntu-and-custom-templates/">Ubuntu: Enabling syslog on Ubuntu and custom templates</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/24/docker-visualizing-image-hierarchy-and-container-dependency-using-dockviz/">Docker: Visualizing image hierarchy and container dependency using dockviz</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/21/golang-running-a-go-binary-as-a-systemd-service-on-ubuntu-16-04/">GoLang: Running a Go binary as a systemd service on Ubuntu 16.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/21/elk-connecting-to-elasticsearch-with-a-go-client/">ELK: Connecting to ElasticSearch with a Go client</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/20/golang-running-a-go-binary-as-a-sysv-service-on-ubuntu-14-04/">GoLang: Running a Go binary as a SysV service on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/19/zabbix-sending-zabbix-metrics-using-a-go-client/">Zabbix: Sending Zabbix metrics using a Go client</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/17/golang-glide-for-go-language-package-management/">GoLang: Glide for Go language package management</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/16/zabbix-zabbix-rest-api-using-a-go-client/">Zabbix: Zabbix REST API using a Go client</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/16/golang-vendor-directory-for-github-branches-other-than-master/">GoLang: Vendor directory for github branches other than master</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/16/golang-cross-compiling-for-linux-and-windows-platforms/">GoLang: Cross Compiling for Linux and Windows platforms</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/13/golang-installing-the-go-programming-language-on-ubuntu-14-04/">GoLang: Installing the Go Programming language on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/12/saltstack-combine-multiple-pillar-files-under-a-single-key/">SaltStack: Combine multiple pillar files under a single key</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/12/saltstack-installing-a-salt-master-on-ubuntu-14-04/">SaltStack: Installing a Salt Master on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/02/elk-custom-template-mappings-to-force-field-types/">ELK: Custom template mappings to force field types</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/01/elk-metadata-fields-in-logstash-for-grok-and-conditional-processing/">ELK: metadata fields in Logstash for grok and conditional processing</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/05/01/elk-installing-logstash-on-ubuntu-14-04/">ELK: Installing Logstash on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/24/elk-using-ruby-in-logstash-filters/">ELK: Using Ruby in Logstash filters</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/21/zabbix-accessing-zabbix-using-the-py-zabbix-python-module/">Zabbix: Accessing Zabbix using the py-zabbix Python module</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/18/docker-logspout-for-docker-log-collection/">Docker: logspout for Docker log collection</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/17/ubuntu-logrotate-for-retention-policy-of-logs/">Ubuntu: logrotate for retention policy of logs</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/17/elk-running-elastalert-as-a-service-on-ubuntu-14-04/">ELK: Running ElastAlert as a service on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/16/elk-installing-metricbeat-for-collecting-system-and-application-metrics/">ELK: Installing MetricBeat for collecting system and application metrics</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/16/elk-elastalert-for-alerting-based-on-data-from-elasticsearch/">ELK: ElastAlert for alerting based on data from ElasticSearch</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/14/zabbix-installing-a-zabbix-agent-on-ubuntu-14-04/">Zabbix: Installing a Zabbix Agent on Ubuntu 14.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/04/elk-elasticdump-and-python-to-create-a-data-warehouse/">ELK: ElasticDump and Python to create a data warehouse job</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/03/elk-using-curator-to-manage-the-size-and-persistence-of-your-index-storage/">ELK: Using Curator to manage the size and persistence of your index storage</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/04/03/virtualbox-installing-virtualbox-and-vagrant-on-ubuntu-14-0416-04/">VirtualBox: Installing VirtualBox and Vagrant on Ubuntu 14.04/16.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/03/21/docker-sending-spring-boot-logging-to-syslog/">Docker: Sending Spring Boot logging to syslog</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/03/20/spring-spring-boot-with-slf4j-logback-sending-to-syslog/">Spring: Spring Boot with SLF4J/Logback sending to syslog</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/03/07/docker-installing-docker-ce-on-ubuntu-14-04-and-16-04/">Docker: Installing Docker CE on Ubuntu 14.04 and 16.04</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/23/squid-configuring-an-ubuntu-host-to-use-a-squid-proxy-for-internet-access/">Squid: Configuring an Ubuntu host to use a Squid proxy for internet access</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/23/squid-controlling-network-access-using-squid-and-whitelisted-domains/">Squid: Controlling network access using Squid and whitelisted domains</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/21/haproxy-using-haproxy-for-ssl-termination-on-ubuntu/">HAProxy: Using HAProxy for SSL termination on Ubuntu</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/21/nginx-using-nginx-for-ssl-termination-on-ubuntu/">Nginx: Using Nginx for SSL termination on Ubuntu</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/21/apache2-enable-ldap-authentication-and-ssl-termination-for-ubuntu/">Apache2: Enable LDAP authentication and SSL termination for Ubuntu</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/21/ubuntu-creating-a-self-signed-certificate-using-openssl-on-ubuntu/">Ubuntu: Creating a self-signed certificate using OpenSSL on Ubuntu</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/21/jenkins-setting-up-a-continuous-integration-server-on-ubuntu/">Jenkins: Setting up a continuous integration server on Ubuntu</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/20/maven-installing-a-3rd-party-jar-to-a-local-or-remote-repository/">Maven: Installing a 3rd party jar to a local or remote repository</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/20/maven-installing-a-private-maven-repository-on-ubuntu-using-artifactory/">Maven: Installing a private Maven repository on Ubuntu using Artifactory</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/20/monitoring-java-jmx-exploration-from-the-console-using-jmxterm/">Monitoring: Java JMX exploration from the console using jmxterm</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/15/ubuntu-using-strace-to-get-a-view-into-file-and-network-activity-of-a-process/">Ubuntu: Using strace to get a view into file and network activity of a process</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/15/ubuntu-using-tcpdump-for-analysis-of-network-traffic-and-port-usage/">Ubuntu: Using tcpdump for analysis of network traffic and port usage</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/14/nginx-custom-access-log-format-and-error-levels/">Nginx: Custom access log format and error levels</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/14/appdynamics-enabling-verbose-debug-logs-for-agents/">AppDynamics: Enabling verbose debug logs for Agents</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/04/openwrt-upgrading-to-the-latest-snapshot-build/">OpenWrt: Upgrading OpenWrt to the latest snapshot build</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/04/pingidentity-disabling-sslv3-and-weak-ciphers-for-pingfederate/">PingIdentity: Disabling SSLv3 and weak ciphers for PingFederate</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/02/04/appdynamics-java-spring-petclinic-and-postgresql-configured-for-monitoring/">AppDynamics: Java Spring PetClinic and PostgreSQL configured for monitoring</a>
+									</li>
+											<li>
+					<a href="https://fabianlee.org/2017/01/24/openssl-using-openssl-to-enumerate-protocols-and-ciphers-in-use-by-web-applications/">OpenSSL: Using OpenSSL to enumerate protocols and ciphers in use by web applications</a>
+									</li>
+					</ul>
+		</section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">Categories</h2>		<ul>
+	<li class="cat-item cat-item-534"><a href="https://fabianlee.org/category/automation/">Automation</a>
+</li>
+	<li class="cat-item cat-item-482"><a href="https://fabianlee.org/category/containers/">Containers</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://fabianlee.org/category/devops/">DevOps</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://fabianlee.org/category/dctm/">Documentum</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://fabianlee.org/category/java/">Java</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="https://fabianlee.org/category/linux/">Linux</a>
+</li>
+	<li class="cat-item cat-item-471"><a href="https://fabianlee.org/category/logging/">Logging</a>
+</li>
+	<li class="cat-item cat-item-464"><a href="https://fabianlee.org/category/monitoring/">Monitoring</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="https://fabianlee.org/category/openwrt/">OpenWrt</a>
+</li>
+	<li class="cat-item cat-item-244"><a href="https://fabianlee.org/category/python/">Python</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://fabianlee.org/category/scripting/">Scripting</a>
+</li>
+		</ul>
+</section>	</aside><!-- .sidebar .widget-area -->
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+							<nav class="main-navigation" role="navigation" aria-label="Footer Primary Menu">
+					<div class="menu-categories-container"><ul id="menu-categories-1" class="primary-menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-897"><a href="https://fabianlee.org/category/monitoring/">Monitoring</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-896"><a href="https://fabianlee.org/category/logging/">Logging</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-936"><a href="https://fabianlee.org/category/containers/">Containers</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-937"><a href="https://fabianlee.org/category/scripting/">Scripting</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+			
+			<div class="site-info">
+								<span class="site-title"><a href="https://fabianlee.org/" rel="home">Fabian Lee : Software Architect</a></span>
+				<a href="https://wordpress.org/">Proudly powered by WordPress</a>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/wp-syntax.js.Без названия"></script>
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/skip-link-focus-fix.js.Без названия"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Selenium_ Running headless automated tests on Ubuntu – Fabian Lee _ Software Architect_files/functions.js.Без названия"></script>
+
+
+</body></html>

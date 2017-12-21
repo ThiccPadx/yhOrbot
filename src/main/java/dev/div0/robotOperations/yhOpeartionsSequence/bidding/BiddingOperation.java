@@ -66,6 +66,11 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
     public boolean execute() throws OperationException {
         log("bidding execute. currentTryout: "+ currentTryout);
         log("lot url "+lotUrl);
+
+        OperationEvent operationEvent = new OperationEvent(OperationEvent.LOT_URL);
+        operationEvent.setData(lotUrl);
+        EventDispatcher.getInstance().dispatchEvent(operationEvent);
+
         log("userMoney "+ userMoney);
 
         log("loading lot page...");
@@ -89,7 +94,7 @@ public class BiddingOperation extends BaseOperation implements IEventListener {
             buttonBlitzBidExists = detectButtonBlitzBidExists();
             log("buttonBlitzBidExists: "+ buttonBlitzBidExists);
 
-            log("detecting normal bit button exists...");
+            log("detecting normal bid button exists...");
             buttonMakeNormalBidExists = detectNormalBidButtonExists();
             log("buttonMakeNormalBidExists: "+ buttonMakeNormalBidExists);
 

@@ -1,9 +1,9 @@
 package dev.div0;
 
 import dev.div0.steps.StepAction;
+import dev.div0.utils.StringUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 
 public class FakeTaskBuilder {
 
@@ -13,13 +13,13 @@ public class FakeTaskBuilder {
 	private String pass = "37fmv563";
 	//private String pass = "1234"; // wrong
 
-	private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/p581919812";
+	private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/o216244767";
 	//private String lot_1_Url = "http://yahoorobot/pages/bitAlreadySet_page.html";
 
 	//private String lot_1_Url = "https://page.auctions.yahoo.co.jp/jp/auction/o211389645";
 	//private String lot_1_Url = "http://yahoorobot/pages/normalBidPage.html";
 	//private String lot_1_Url = "http://yahoorobot/pages/bidHasBeenResetPage.html";
-	//private String lot_1_Url = "http://yahoorobot/pages/blitzOnlyPage.html";
+	//private String lot_1_Url = "http://yahoorobot/pages/captchaPage.html";
 
 	private int money = 570;
 
@@ -33,16 +33,14 @@ public class FakeTaskBuilder {
 		JSONObject step5 = new JSONObject();
 
 		JSONObject settings = new JSONObject();
-		settings.put("id", "1");
-		settings.put("isManualFinish", true);
-
+		settings.put("id", StringUtil.generateId(36));
+		settings.put("isManualFinish", false);
 
 		JSONObject yahooBiddingData = new JSONObject();
 		yahooBiddingData.put("login",login);
 		yahooBiddingData.put("pass",pass);
 		yahooBiddingData.put("lotUrl",lot_1_Url);
 		yahooBiddingData.put("userMoney",money);
-
 
 		step1.put("id", 0);
 		step1.put("action", StepAction.TASK_SETTING.toString());

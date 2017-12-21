@@ -39,7 +39,7 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 	
 	protected TaskResult taskResult;
 	
-	private String id;
+	public static String id;
 	private boolean isManualTaskFinish = false;
 	
 	public Task(String taskData){
@@ -50,9 +50,10 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 
 		steps = (ArrayList<Step>)parsedData.get("steps");
 		
-		id = (String)parsedData.get("id");
+		Task.id = (String)parsedData.get("id");
 		isManualTaskFinish = (Boolean)parsedData.get("isManualTaskFinish");
-		taskResult.setId(id);
+		taskResult.setId(Task.id);
+		log("Task id = "+Task.id);
 	}
 	
 	protected void initDefaultTaskResult() {
@@ -136,11 +137,14 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 
 	protected void taskComplete() {
 		log("Task complete !!!");
-		taskResult.setId(id);
+
+		taskResult.setId(Task.id);
 
 		log("task result "+taskResult.getResult());
+		log("task id "+taskResult.getId());
 		log("task errorText "+taskResult.getErrorText());
 		log("task payload "+taskResult.getPayload());
+		log("lot url = "+taskResult.getLotUrl());
 		
 		TaskEvent taskEvent = new TaskEvent(TaskEvent.TASK_COMPLETE);
 		taskEvent.setData(taskResult);
@@ -167,16 +171,16 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 	}
 
 	protected void createWebDriver() {
-		log("Task creating chrome webDriver");
+		log("Task creating webDriver");
 		webDriverCreator = new CreateWebDriver();
-		webDriver = webDriverCreator.execute(BrowserType.CHROME);
+		//webDriver = webDriverCreator.execute(BrowserType.CHROME);
 		//webDriver = webDriverFactory.getDriver("firefox").getDriver();
 		//webDriver = webDriverFactory.getDriver("chrome").getDriver();
 		//webDriver = webDriverCreator.execute(BrowserType.IE);
 		//webDriver = webDriverCreator.execute(BrowserType.HTML_UNIT);
 
 		//webDriver = webDriverCreator.execute(BrowserType.FIREFOX);
-		//webDriver = webDriverCreator.execute(BrowserType.PHANTOM_JS);
+		webDriver = webDriverCreator.execute(BrowserType.PHANTOM_JS);
 		//webDriver = webDriverCreator.execute(BrowserType.HTML_UNIT);
 		//webDriver = webDriverCreator.execute(BrowserType.OPERA);
 		//webDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
@@ -216,7 +220,10 @@ public class Task extends BaseLogger implements IEventListener, Runnable{
 		if(event.getType().equals(OperationEvent.ELEMENT_TEXT_RESULT)){
 			taskResult.setPayload((String)event.getData());
 		}
-		if(event.getType().equals(OperationEvent.MONTH_SELECTED)){
+		else if(event.getType().equals(OperationEvent.LOT_URL)){
+			taskResult.setLotUrl((String)event.getData());
+		}
+		else if(event.getType().equals(OperationEvent.MONTH_SELECTED)){
 			taskResult.setMonth((String)event.getData());
 		}
 		else if(event.getType().equals(OperationEvent.DATE_SELECTED)){

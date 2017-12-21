@@ -15,7 +15,7 @@ public class DetectPageHasTextOperation extends FindElementAndDoOperation{
             findElement();
         }
         catch(OperationException exception){
-            log("NO SUCH ELEMENT by xpath "+operationData.getElementSearchData());
+            log("NO SUCH ELEMENT by search data "+operationData.getElementSearchData());
         }
         /*
         if(webElement==null){

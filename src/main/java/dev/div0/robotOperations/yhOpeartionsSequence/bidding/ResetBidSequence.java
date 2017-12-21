@@ -122,6 +122,7 @@ public class ResetBidSequence extends BaseOperation {
                             }
                         }
                         else{
+                            log("No attention element");
                             log("detecting bid has been set");
                             bidHasBeenSet = detectBidHasBeenSet();
                             log("bidHasBeenSet="+bidHasBeenSet);

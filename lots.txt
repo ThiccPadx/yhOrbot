@@ -39,3 +39,14 @@ NORMAL BID BUTTON
 
 RESET BID BUTTON
 //*[@id="l-sub"]/div[1]/ul/li[2]/div[1]/div[1]/a
+
+
+Debian Virtual box
+root password
+1234
+
+
+user name
+ilya
+password
+1234

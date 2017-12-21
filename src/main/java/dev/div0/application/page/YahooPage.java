@@ -1,6 +1,8 @@
 package dev.div0.application.page;
 
 public class YahooPage {
+
+    //public static String auth_pageUrl = "http://yahoorobot/pages/captchaPage.html";
     public static String auth_pageUrl = "https://login.yahoo.co.jp/config/login";
     public static String auth_loginInputId = "username";
     public static String auth_loginBtnId = "btnNext";

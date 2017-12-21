@@ -12,6 +12,8 @@ public class OperationEvent extends BaseEvent {
 	public static String TIME_SELECTED = "TIME_SELECTED";
 	public static String LOGIN_INCORRECT = "LOGIN_INCORRECT";
 	public static String PASSWORD_INCORRECT = "PASSWORD_INCORRECT";
+	public static String CAPTCHA_PAGE_ERROR = "CAPTCHA_PAGE_ERROR";
+	public static String LOT_URL = "LOT_URL";
 	
 	public OperationEvent(String type) {
 		super(type);

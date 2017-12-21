@@ -30,7 +30,7 @@ public class DetectDatesAvailableForSelectedCityOperation extends FindElementAnd
 			findElement();
 		}
 		catch(OperationException exception){
-			log("NO SUCH ELEMENT by xpath "+operationData.getElementSearchData());
+			log("NO SUCH ELEMENT search data "+operationData.getElementSearchData());
 		}
 		
 		if(webElement==null){

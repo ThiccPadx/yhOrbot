@@ -54,8 +54,7 @@ public class TakeScreenshot extends BaseOperation {
 		
 	}
 
-	private boolean takeScreenshot() throws Exception{
-		
+	protected boolean takeScreenshot() throws Exception{
 		// //*[@id="rc-imageselect"]/div[2]/div[2]
 		log("Taking screenshot...");
 		

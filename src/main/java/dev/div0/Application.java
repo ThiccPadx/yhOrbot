@@ -63,7 +63,9 @@ public class Application implements IEventListener{
 	public static int baseOperationWaitSecondsUntil = 5; 
 
     private boolean isFake = true;
-	
+
+	public static String screenshotsFolder;
+
 	public Application(){		
 		createLogger();
 		log("start application. version: "+version);
@@ -108,30 +110,9 @@ public class Application implements IEventListener{
 			e.printStackTrace();
 		}
 
-		/*
-        try
-		{
-			if(isFake == true){
-                ClassLoader classLoader = getClass().getClassLoader();
-                File file = new File(classLoader.getResource("anchors_div0.xml").getFile());
-
-                //new Anchors().getAnchors(new File("C:\\consultant\\data\\anchors_div0.xml"));
-
-                log("anchors file is "+file);
-                new Anchors().getAnchors(file);
-			}
-			else{
-				new Anchors().getAnchors(new File("C:\\consultant\\data\\anchors_donor.xml"));
-			}
-		} 
-		catch (ParserConfigurationException | SAXException | IOException e) {
-			System.out.println("Error parsing anchors");
-			e.printStackTrace();
-			logError(e.getMessage());
-		}
-		log("Anchors loaded");
-		*/
 		//TaskBuilderRecaptchaOnly fakeTaskLoader = new TaskBuilderRecaptchaOnly();
+
+		log("screenshotsFolder "+Application.screenshotsFolder);
 
 		createTaskData();
 		startTask();
@@ -155,6 +136,11 @@ public class Application implements IEventListener{
 		Node rCaptchaNode = rucaptchaNodeList.item(0);
 		String rCaptchaValue = rCaptchaNode.getTextContent();
 
+		NodeList screenshotsPathNodeList = settingsDocument.getDocumentElement().getElementsByTagName("screenshotsFolder");
+		Node screenshotsPathNode = screenshotsPathNodeList.item(0);
+
+		Application.screenshotsFolder = screenshotsPathNode.getTextContent();
+
 		return rCaptchaValue;
 	}
 
@@ -176,7 +162,6 @@ public class Application implements IEventListener{
 			taskData=new TaskBuilder().build();
 		}
 	}
-
 
 	public void onCancelTask(ServerSession clientServerSession){
 		log("on cancel task. task = "+currentTask);
@@ -204,7 +189,6 @@ public class Application implements IEventListener{
 		log(" -- creating new task. currentTask= "+currentTask);
 		currentTask = new Task(taskData);
 	}
-	
 	
 	private void destroyTask() {
 		log("destroy task");

@@ -8,6 +8,7 @@ public class TaskResult {
 	private String result;
 	private String errorText;
 	private String payload;
+	private String lotUrl;
 	
 	public static String IN_PROGRESS = "IN_PROGRESS";
 	public static String COMPLETE = "COMPLETE";
@@ -54,5 +55,13 @@ public class TaskResult {
 	}
 	public void setPayload(String payload) {
 		this.payload = payload;
+	}
+
+	public String getLotUrl() {
+		return lotUrl;
+	}
+
+	public void setLotUrl(String lotUrl) {
+		this.lotUrl = lotUrl;
 	}
 }

@@ -5,10 +5,19 @@ import dev.div0.events.EventDispatcher;
 import dev.div0.robotOperations.*;
 import dev.div0.robotOperations.events.OperationEvent;
 import dev.div0.robotOperations.operationData.OperationData;
+import dev.div0.robotOperations.screen.TakePageScreenshot;
+import dev.div0.robotOperations.yhOpeartionsSequence.bidding.events.BiddingResultEvent;
 import dev.div0.steps.ElementSearchType;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.seleniumhq.jetty9.util.security.Credential;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 
 public class AuthOperation extends BaseOperation {
@@ -61,8 +70,18 @@ public class AuthOperation extends BaseOperation {
         log("loading login page...");
         loadLoginPage();
 
+        // detect is captcha
+        boolean isCaptchaPage = detectIsCaptcha();
+
+        if(isCaptchaPage){
+            OperationEvent operationEvent = new OperationEvent(OperationEvent.CAPTCHA_PAGE_ERROR);
+            EventDispatcher.getInstance().dispatchEvent(operationEvent);
+            return true;
+        }
+
         // detect if logged in previously
         boolean isLogged = detectIsLogged();
+
 
         isLogged = !detectAlreadyLoggedInOperation.hasCssClass("dispNone");
 
@@ -119,6 +138,18 @@ public class AuthOperation extends BaseOperation {
         }
     }
 
+    private boolean detectIsCaptcha() throws OperationException{
+        log("detectIsCaptcha()");
+        detectPageHasUserDataErrorOperation = new DetectPageHasElementOperation();
+        detectPageHasUserDataErrorOperation.setWebDriver(webDriver);
+        OperationData internalOperationData = new OperationData();
+        internalOperationData.setElementSearchType(ElementSearchType.BY_XPATH);
+        internalOperationData.setElementSearchData("//*[@id=\"captchaV5Answer\"]");
+
+        detectPageHasUserDataErrorOperation.setOperationData(internalOperationData);
+        return detectPageHasUserDataErrorOperation.execute();
+    }
+
     private boolean detectIsUserDataNotCorrect() throws OperationException {
         detectPageHasUserDataErrorOperation = new DetectPageHasElementOperation();
         detectPageHasUserDataErrorOperation.setWebDriver(webDriver);
@@ -131,8 +162,15 @@ public class AuthOperation extends BaseOperation {
         return detectPageHasUserDataErrorOperation.execute();
     }
 
+    private void createScreenshot() throws OperationException {
+        TakePageScreenshot takePageScreenshot = new TakePageScreenshot();
+        takePageScreenshot.setWebDriver(webDriver);
+        takePageScreenshot.execute();
+    }
+
     private boolean detectIsLogged() throws OperationException {
         log("detectIsLogged()");
+        createScreenshot();
 
         detectAlreadyLoggedInOperation = new DetectPageHasElementOperation();
         detectAlreadyLoggedInOperation.setWebDriver(webDriver);

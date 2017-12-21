@@ -59,6 +59,7 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
 
     @Override
     public boolean execute() throws OperationException {
+        //clearCookie();
         return createAuth();
     }
 
@@ -71,6 +72,10 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
         else if(event.getType().equals(OperationEvent.LOGIN_INCORRECT)){
             result.setResult("error");
             result.setErrorText("LOGIN_INCORRECT");
+        }
+        else if(event.getType().equals(OperationEvent.CAPTCHA_PAGE_ERROR)){
+            result.setResult("error");
+            result.setErrorText("CAPTCHA_PAGE_ERROR");
         }
         else if(event.getType().equals(BiddingResultEvent.BID_ALREADY_SET)){
             result.setResult("error");
@@ -111,6 +116,13 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
             dataObject.put("errorDescription", event.getData());
             dataObject.put("errorText", "LOT_CLOSED");
             result.setErrorText(dataObject.toString());
+        }
+    }
+
+    private void clearCookie(){
+        log("clear cookie");
+        if(webDriver!=null){
+            webDriver.manage().deleteAllCookies();
         }
     }
 
@@ -177,7 +189,6 @@ public class YahooOperationsSequence extends BaseOperation implements IEventList
         biddingOperation.setWebDriver(webDriver);
         biddingOperation.setOperationData(operationData);
         boolean biddingComplete = biddingOperation.execute();
-
 
         return biddingComplete;
     }
